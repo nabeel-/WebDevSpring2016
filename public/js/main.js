@@ -300,7 +300,8 @@
 			titleEl = contentEl.querySelector('.slide__title--main'),
 			descriptionEl = contentEl.querySelector('.slide__description'),
 			statusEl = contentEl.querySelector('.slide__status'),
-			buyEl = contentEl.querySelector('.button--buy');
+			viewEl = contentEl.querySelector('.button--view'),
+			tagsEl = contentEl.querySelector('.slide__tags');
 
 		// add slide--open class to the item
 		classie.add(item, 'slide--open');
@@ -315,10 +316,12 @@
 		dynamics.css(titleEl, {translateY : 600, opacity: 0});
 		// - description
 		dynamics.css(descriptionEl, {translateY : 400, opacity: 0});
+		// - tags
+		dynamics.css(tagsEl, {translateY : 400, opacity: 0});
 		// - status
 		dynamics.css(statusEl, {translateY : 400, opacity: 0});
-		// - buy button
-		dynamics.css(buyEl, {translateY : 400, opacity: 0});
+		// - view button
+		dynamics.css(viewEl, {translateY : 400, opacity: 0});
 
 		// animate (scale up) the expander element
 		dynamics.animate(expanderEl, 
@@ -360,6 +363,16 @@
 			}
 		);
 
+		// animate the tags element in
+		dynamics.animate(tagsEl,
+			{
+				translateY : 0, opacity : 1
+			},
+			{
+				type: dynamics.bezier, points: [{"x":0,"y":0,"cp":[{"x":0.2,"y":1}]},{"x":1,"y":1,"cp":[{"x":0.3,"y":1}]}], duration: 1000, delay: 500
+			}
+		);
+
 		// animate the description element in
 		dynamics.animate(descriptionEl, 
 			{
@@ -380,8 +393,8 @@
 			}
 		);
 
-		// animate the buy element in
-		dynamics.animate(buyEl, 
+		// animate the view element in
+		dynamics.animate(viewEl,
 			{
 				translateY : 0, opacity : 1
 			}, 
@@ -416,7 +429,8 @@
 			titleEl = contentEl.querySelector('.slide__title--main'),
 			descriptionEl = contentEl.querySelector('.slide__description'),
 			statusEl = contentEl.querySelector('.slide__status'),
-			buyEl = contentEl.querySelector('.button--buy');
+			viewEl = contentEl.querySelector('.button--view'),
+			tagsEl = contentEl.querySelector('.slide__tags');
 
 		// add slide--close class to the item
 		classie.add(item, 'slide--close');
@@ -425,9 +439,9 @@
 		classie.remove(bodyEl, 'noscroll');
 		classie.remove(contentEl, 'scrollable');
 
-		// animate the buy element out
-		dynamics.stop(buyEl);
-		dynamics.animate(buyEl, 
+		// animate the view element out
+		dynamics.stop(viewEl);
+		dynamics.animate(viewEl,
 			{
 				translateY : 400, opacity : 0
 			}, 
@@ -442,6 +456,17 @@
 			{
 				translateY : 400, opacity : 0
 			}, 
+			{
+				type: dynamics.bezier, points: [{"x":0,"y":0,"cp":[{"x":0.2,"y":1}]},{"x":1,"y":1,"cp":[{"x":0.3,"y":1}]}], duration: 1000
+			}
+		);
+
+		// animate the tags element out
+		dynamics.stop(tagsEl);
+		dynamics.animate(tagsEl,
+			{
+				translateY : 400, opacity : 0
+			},
 			{
 				type: dynamics.bezier, points: [{"x":0,"y":0,"cp":[{"x":0.2,"y":1}]},{"x":1,"y":1,"cp":[{"x":0.3,"y":1}]}], duration: 1000
 			}

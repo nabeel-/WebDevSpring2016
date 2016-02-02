@@ -646,3 +646,15 @@ a:focus {
 .nav ul > li:hover ul li {
     height:36px;
 }
+
+.slide__tags .tag {
+	background-color: #464653;
+	color: #ffffff;
+	padding: 5px 10px;
+	margin-left: 5px;
+	border-radius: 5px;
+}
+
+.slide__tags .tag:first-child {
+	margin-left: 0;
+}
