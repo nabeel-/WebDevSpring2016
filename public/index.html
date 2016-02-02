@@ -1,1 +1,102 @@
-<h1>homepage</h1>
+<!DOCTYPE html>
+<html lang="en" class="no-js">
+	<head>
+		<meta charset="UTF-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge">
+		<meta name="viewport" content="width=device-width, initial-scale=1">
+		<title>nabeel el-husayni | web dev spring 2016</title>
+		<meta name="description" content="homepage for nabeel el-husayni's projects for web development spring 2016" />
+		<meta name="author" content="Nabeel El-Husayni" />
+		<link rel="shortcut icon" href="favicon.ico">
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/3.0.3/normalize.min.css" />
+		<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.5.0/css/font-awesome.min.css" />
+		<link rel="stylesheet" type="text/css" href="css/component.css" />
+		<!--[if IE]>
+  		<script src="http://html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+		<![endif]-->
+	</head>
+	<body>
+		<div class="container">
+			<header class="header">
+				<div class="links">
+					<nav class="nav">
+				    <ul>
+				        <li class="first">
+				            <a class="icon icon-github" href="http://tympanus.net/Development/SeatPreview/" title="Github"><span>Github</span></a>
+				            <ul>
+				                <li><a class="icon icon-linkedin" href="#" title="LinkedIn"><span>LinkedIn</span></a></li>
+				                <li><a class="icon icon-facebook" href="#" title="Facebook"><span>Facebook</span></a></li>
+				                <li><a class="icon icon-twitter" href="#" title="Twitter"><span>Twitter</span></a></li>
+				            </ul>
+				        </li>
+				        <li><a class="icon icon-question" href="#" title="Info"><span>Info</span></a></li>
+				    </ul>
+					</nav>
+				</div>
+				<h1>nabeel el-husayni</h1>
+			</header>
+			<div class="deco deco--title"></div>
+			<div id="slideshow" class="slideshow">
+				<div class="slide">
+					<h2 class="slide__title slide__title--preview">Form Builder <span class="slide__status status--dev">Development</span></h2>
+					<div class="slide__item">
+						<div class="slide__inner">
+							<img class="slide__img slide__img--small" src="#" alt="Some image" />
+							<button class="action action--open" aria-label="View details"><i class="fa fa-plus"></i></button>
+						</div>
+					</div>
+					<div class="slide__content">
+						<div class="slide__content-scroller">
+							<img class="slide__img slide__img--large" src="#" alt="Some image" />
+							<div class="slide__details">
+								<h2 class="slide__title slide__title--main">Macadamia Skin Oil</h2>
+								<p class="slide__description">inside the content</p>
+								<div>
+									<span class="slide__status slide__status--large">$39</span>
+									<button class="button button--buy">Add to cart</button>
+								</div>
+							</div><!-- /slide__details -->
+						</div><!-- slide__content-scroller -->
+					</div><!-- slide__content -->
+				</div>
+				<div class="slide">
+					<h2 class="slide__title slide__title--preview">Progress Tracker <span class="slide__status status--concept">Concept</span></h2>
+					<div class="slide__item">
+						<div class="slide__inner">
+							<img class="slide__img slide__img--small" src="#" alt="Some image" />
+							<button class="action action--open" aria-label="View details"><i class="fa fa-plus"></i></button>
+						</div>
+					</div>
+					<div class="slide__content">
+						<div class="slide__content-scroller">
+							<img class="slide__img slide__img--large" src="#" alt="Some image" />
+							<div class="slide__details">
+								<h2 class="slide__title slide__title--main">Grapeseed Skin Oil</h2>
+								<p class="slide__description">Moisture control for all skin types</p>
+								<div>
+									<span class="slide__status slide__status--large">$19</span>
+									<button class="button button--buy">Add to cart</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<button class="action action--close" aria-label="Close"><i class="fa fa-close"></i></button>
+			</div>
+			<!-- Related demos -->
+			<section class="content content--other">
+				<p>CS4550 Web Development class projects by <a href="https://nabeel-elhusayni.com">Nabeel El-Husayni</a></p>
+				<br />
+			</section>
+		</div><!-- /container -->
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/classie/1.0.1/classie.min.js"></script>
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/dynamics.js/0.0.9/dynamics.min.js"></script>
+		<script src="js/main.js"></script>
+		<script>
+			(function() {
+				document.documentElement.className = 'js';
+				var slideshow = new CircleSlideshow(document.getElementById('slideshow'));
+			})();
+		</script>
+	</body>
+</html>
