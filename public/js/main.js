@@ -300,7 +300,7 @@
 			titleEl = contentEl.querySelector('.slide__title--main'),
 			descriptionEl = contentEl.querySelector('.slide__description'),
 			statusEl = contentEl.querySelector('.slide__status'),
-			viewEl = contentEl.querySelector('.button--view'),
+			viewEl = contentEl.querySelector('.link--view'),
 			tagsEl = contentEl.querySelector('.slide__tags');
 
 		// add slide--open class to the item
@@ -429,7 +429,7 @@
 			titleEl = contentEl.querySelector('.slide__title--main'),
 			descriptionEl = contentEl.querySelector('.slide__description'),
 			statusEl = contentEl.querySelector('.slide__status'),
-			viewEl = contentEl.querySelector('.button--view'),
+			viewEl = contentEl.querySelector('.link--view'),
 			tagsEl = contentEl.querySelector('.slide__tags');
 
 		// add slide--close class to the item
