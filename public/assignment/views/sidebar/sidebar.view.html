@@ -1,0 +1,16 @@
+<div class="col-sm-3 col-md-2 sidebar" ng-controller="SidebarController as ctrl">
+    <ul class="nav nav-sidebar">
+        <li ng-class="{active: pathAt('home') }">
+          <a href="#/home">Home</a>
+        </li>
+        <li ng-class="{active: pathAt('profile') }" ng-show="loggedIn">
+          <a href="#/profile">Profile</a>
+        </li>
+        <li ng-class="{active: pathAt('admin') }" ng-show="loggedIn && isAdmin">
+          <a href="#/admin">Admin</a>
+        </li>
+        <li ng-class="{active: pathAt('forms') }" ng-show="loggedIn">
+          <a href="#/forms">Forms</a>
+        </li>
+    </ul>
+</div>
