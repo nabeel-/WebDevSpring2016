@@ -18,7 +18,6 @@
     ];
 
     function findUserByCredentials(username, password, callback) {
-      debugger
       var found_user = _.findWhere(users, {username: username, password: password});
 
       callback(found_user);

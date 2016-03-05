@@ -9,6 +9,7 @@
     $scope.logout = function() {
       $rootScope.currentUser = null;
       $rootScope.loggedIn    = false;
+      $rootScope.isAdmin     = false;
       $location.url('/home');
     };
   };

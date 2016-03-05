@@ -23,6 +23,10 @@
         controller: 'AdminController',
         templateUrl: 'views/users/admin.view.html'
       })
+      .when('/forms', {
+        controller: 'FormsController',
+        templateUrl: 'views/forms/forms.view.html'
+      })
       .otherwise({
         redirectTo:'/home'
       });

@@ -12,12 +12,15 @@
         password:  $scope.password,
         email:     $scope.email,
         firstName: null,
-        lastName:  null
+        lastName:  null,
+        roles:     []
       };
 
       var callback = function(user) {
         $rootScope.currentUser = user;
-        $rootScope.loggedIn = true;
+        $rootScope.loggedIn    = true;
+        $rootScope.isAdmin     = _.contains(user.roles, 'admin');
+        
         $location.url("/profile");
       };
 
