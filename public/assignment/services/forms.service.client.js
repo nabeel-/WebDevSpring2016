@@ -16,7 +16,7 @@
       form.userId = userId;
       forms.push(form);
 
-      callback(forms);
+      callback(form);
     }
 
     function findAllFormsForUser(userId, callback) {

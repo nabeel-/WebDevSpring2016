@@ -15,8 +15,8 @@
       if ($scope.title) {
         var form = { title: $scope.formTitle }
 
-        FormService.createFormForUser(currentUser._id, form, function(forms) {
-          $scope.forms = forms;
+        FormService.createFormForUser(currentUser._id, form, function(form) {
+          $scope.forms.push(form);
         });
       }
     }
