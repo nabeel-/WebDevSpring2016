@@ -1,14 +1,14 @@
 'use strict';
 /**
  * @ngdoc overview
- * @name sbAdminApp
+ * @name TutorConnect
  * @description
- * # sbAdminApp
+ * # TutorConnect
  *
  * Main module of the application.
  */
 angular
-  .module('sbAdminApp', [
+  .module('TutorConnect', [
     'oc.lazyLoad',
     'ui.router',
     'ui.bootstrap',
@@ -32,7 +32,7 @@ angular
           load: function ($ocLazyLoad) {
               return $ocLazyLoad.load(
               {
-                name: 'sbAdminApp',
+                name: 'TutorConnect',
                 files:['views/header/header.controller.js']
               })
             }
@@ -92,7 +92,7 @@ angular
         resolve: {
           loadMyFiles:function($ocLazyLoad) {
             return $ocLazyLoad.load({
-              name:'sbAdminApp',
+              name:'TutorConnect',
               files:[
               'scripts/controllers/main.js',
               'scripts/directives/dashboard/stats/stats.js'
@@ -108,7 +108,7 @@ angular
         resolve: {
           loadProfile: function($ocLazyLoad) {
             return $ocLazyLoad.load({
-              name:'sbAdminApp',
+              name:'TutorConnect',
               files:[
                 'scripts/controllers/profile.controller.js'
               ]
@@ -123,7 +123,7 @@ angular
         resolve: {
           loadCtrl:function($ocLazyLoad) {
             return $ocLazyLoad.load({
-              name:'sbAdminApp',
+              name:'TutorConnect',
               files:[
               'scripts/controllers/login.js',
               'scripts/services/user.service.js'
@@ -146,7 +146,7 @@ angular
               ]
             }),
             $ocLazyLoad.load({
-                name:'sbAdminApp',
+                name:'TutorConnect',
                 files:['scripts/controllers/chartContoller.js']
             })
           }

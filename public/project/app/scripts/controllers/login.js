@@ -1,13 +1,14 @@
 'use strict';
 /**
  * @ngdoc function
- * @name sbAdminApp.controller:LoginCtrl
+ * @name TutorConnect.controller:LoginCtrl
  * @description
  * # LoginCtrl
- * Controller of the sbAdminApp
+ * Controller of the TutorConnect
  */
-angular.module('sbAdminApp')
+angular.module('TutorConnect')
   .controller('LoginCtrl', function($rootScope, $scope, $state, UserService) {
+    
     $scope.login = function() {
       var callback = function(user) {
         $rootScope.currentUser = user;

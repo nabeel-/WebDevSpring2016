@@ -35,8 +35,10 @@ module.exports = function(config) {
       'bower_components/angular-bootstrap/ui-bootstrap-tpls.js',
       'bower_components/metisMenu/dist/metisMenu.js',
       'bower_components/Chart.js/Chart.min.js',
+      'bower_components/underscore/underscore-min.js',
       'app/scripts/app.js',
       'app/scripts/**/*.js',
+      'app/views/**/*.js',
       'test/spec/**/*.js'
     ],
 

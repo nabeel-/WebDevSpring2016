@@ -1,12 +1,12 @@
 'use strict';
 /**
  * @ngdoc function
- * @name sbAdminApp.controller:MainCtrl
+ * @name TutorConnect.controller:MainCtrl
  * @description
  * # MainCtrl
- * Controller of the sbAdminApp
+ * Controller of the TutorConnect
  */
-angular.module('sbAdminApp')
+angular.module('TutorConnect')
   .controller('MainCtrl', function($scope, $rootScope, $state) {
 
   });

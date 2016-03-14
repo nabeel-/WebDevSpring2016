@@ -1,7 +1,7 @@
 (function() {
   "use strict";
 
-  angular.module("sbAdminApp").factory("UserService", UserService);
+  angular.module("TutorConnect").factory("UserService", UserService);
 
   function UserService($rootScope, _) {
     var users = [

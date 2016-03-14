@@ -1,12 +1,12 @@
 'use strict';
 /**
  * @ngdoc function
- * @name sbAdminApp.controller:ProfileCtrl
+ * @name TutorConnect.controller:ProfileCtrl
  * @description
  * # ProfileCtrl
- * Controller of the sbAdminApp
+ * Controller of the TutorConnect
  */
-angular.module('sbAdminApp')
+angular.module('TutorConnect')
   .controller('HeaderCtrl', function($scope, $rootScope, $state) {
     $scope.logout = function() {
       $rootScope.currentUser = null;
