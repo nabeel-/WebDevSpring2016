@@ -2,7 +2,7 @@
 
 OLD_HOME=$HOME
 cd $OPENSHIFT_REPO_DIR
-export HOME=$OPENSHIFT_REPO_DIR
+export HOME=$OPENSHIFT_REPO_DIR/public/project
 
 grunt build
 
