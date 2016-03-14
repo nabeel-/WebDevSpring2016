@@ -4,6 +4,6 @@ OLD_HOME=$HOME
 cd $OPENSHIFT_REPO_DIR
 export HOME=$OPENSHIFT_REPO_DIR
 
-grunt build --gruntfile ./public/project/Gruntfile.js
+./node_modules/grunt_cli/bin/grunt build --gruntfile ./public/project/Gruntfile.js
 
 export HOME=$OLD_HOME
