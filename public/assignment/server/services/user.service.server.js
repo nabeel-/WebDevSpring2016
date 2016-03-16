@@ -5,6 +5,11 @@ module.exports = function(app, userModel) {
     res.json(new_user);
   });
 
+  app.delete("/api/assignment/user/:id", function(req, res){
+    var users = userModel.deleteUserById(req.params.id);
+    res.json(users);
+  });
+
   app.get("/api/assignment/user", function(req, res){
     if(req.query.username) {
       req.query.password ? authUser(req, res) : getUser(req, res);
@@ -15,28 +20,39 @@ module.exports = function(app, userModel) {
   });
 
   function authUser(req, res) {
-    var creds = {username: req.query.username, password: req.query.password};
-    res.json(userModel.findUserByCredentials(creds));
+    var creds = {username: req.query.username, password: req.query.password},
+        resp  = userModel.findUserByCredentials(creds);
+
+    resp ? resp : error("Invalid credentials used.");
+
+    res.json(resp);
   }
 
   function getUser(req, res) {
-    var username = req.query.username;
-    res.json(userModel.findUserByUsername(username));
+    var username = req.query.username,
+        resp     = userModel.findUserByUsername(username);
+
+    resp ? resp : error("User with username: " + username + " not found.");
+
+    res.json(resp);
   }
 
   app.get("/api/assignment/user/:id", function(req, res){
-    var user = userModel.findUserById(req.params.id);
-    res.json(user);
+    var user = userModel.findUserById(req.params.id),
+        resp = user ? user : error("User with ID: " + req.params.id + " not found.");
+
+    res.json(resp);
   });
 
   app.put("/api/assignment/user/:id", function(req, res){
-    var updated_user = userModel.updateUserById(req.params.id, req.body);
-    res.json(updated_user);
+    var updated_user = userModel.updateUserById(req.params.id, req.body),
+        resp         = updated_user ? updated_user : error("User with ID: " + req.params.id + " not found.");
+
+    res.json(resp);
   });
 
-  app.delete("/api/assignment/user/:id", function(req, res){
-    var users = userModel.deleteUserById(req.params.id);
-    res.json(users);
-  });
+  function error(msg) {
+    return error = { errors: [ { status: 400, detail: msg} ]};
+  }
 
 };

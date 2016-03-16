@@ -3,13 +3,6 @@ var user_data = require("./user.mock.json"),
 
 var _API = {};
 
-_API.findUserById = function(userId) {
-  var found_user = _.findWhere(user_data, function(i) {
-    return i._id == userId;
-  });
-  return found_user;
-}
-
 _API.deleteUserById = function(userId) {
   user_data = _.reject(user_data, function(user) {
       return user._id == userId;
@@ -27,9 +20,18 @@ _API.getAllUsers = function() {
   return user_data;
 }
 
-_API.updateUserById = function(userId, user) {
-  var found_user = _.findWhere(user_data, {_id: userId});
+_API.findUserById = function(userId) {
+  var found_user = _.findWhere(user_data, function(i) {
+    return i._id == userId;
+  });
+  return found_user || null;
+}
 
+_API.updateUserById = function(userId, user) {
+  var found_user = _.findWhere(user_data, function(i) {
+    return i._id == userId;
+  });
+  
   if(found_user) { 
     found_user.firstName = user.firstName;
     found_user.lastName  = user.lastName; 
@@ -38,7 +40,7 @@ _API.updateUserById = function(userId, user) {
     found_user.email     = user.email;  
   }
 
-  return found_user;
+  return found_user || null;
 }
 
 _API.findUserByCredentials = function(creds) {

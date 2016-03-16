@@ -5,27 +5,27 @@
     $routeProvider
       .when('/home', {
         controller: 'MainController',
-        templateUrl: 'views/home/home.view.html'
+        templateUrl: 'client/views/home/home.view.html'
       })
       .when('/register', {
         controller:'RegisterController',
-        templateUrl:'views/users/register.view.html'
+        templateUrl:'client/views/users/register.view.html'
       })
       .when('/login', {
         controller: 'LoginController',
-        templateUrl: 'views/users/login.view.html'
+        templateUrl: 'client/views/users/login.view.html'
       })
       .when('/profile', {
         controller: 'ProfileController',
-        templateUrl: 'views/users/profile.view.html'
+        templateUrl: 'client/views/users/profile.view.html'
       })
       .when('/admin', {
         controller: 'AdminController',
-        templateUrl: 'views/users/admin.view.html'
+        templateUrl: 'client/views/users/admin.view.html'
       })
       .when('/forms', {
         controller: 'FormsController',
-        templateUrl: 'views/forms/forms.view.html'
+        templateUrl: 'client/views/forms/forms.view.html'
       })
       .otherwise({
         redirectTo:'/home'

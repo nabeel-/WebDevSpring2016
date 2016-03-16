@@ -10,14 +10,14 @@
         <title>Home</title>
         <!-- Styles -->
         <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
-        <link href="css/dashboard.css" rel="stylesheet">
+        <link href="client/css/dashboard.css" rel="stylesheet">
     </head>
     <body ng-controller="MainController">
         
-        <div ng-include="'views/header/header.view.html'"></div>
+        <div ng-include="'client/views/header/header.view.html'"></div>
         <div class="container-fluid">
             <div class="row">
-                <div ng-include="'views/sidebar/sidebar.view.html'"></div>
+                <div ng-include="'client/views/sidebar/sidebar.view.html'"></div>
                 <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                     <div ng-view></div>
                 </div>
@@ -31,19 +31,19 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
         <script src="app.js"></script>
         <script src="config.js"></script>
-        <script src="modules/underscore.module.js"></script>
-        <script src="services/user.service.client.js"></script>
-        <script src="services/forms.service.client.js"></script>
+        <script src="client/modules/underscore.module.js"></script>
+        <script src="client/services/user.service.client.js"></script>
+        <script src="client/services/forms.service.client.js"></script>
         <!-- Controllers -->
-        <script src="main/main.controller.js"></script>
-        <script src="views/admin/admin.controller.js"></script>
-        <script src="views/fields/form-fields.controller.js"></script>
-        <script src="views/forms/forms.controller.js"></script>
-        <script src="views/header/header.controller.js"></script>
-        <script src="views/home/home.controller.js"></script>
-        <script src="views/sidebar/sidebar.controller.js"></script>
-        <script src="views/users/login.controller.js"></script>
-        <script src="views/users/profile.controller.js"></script>
-        <script src="views/users/register.controller.js"></script>
+        <script src="client/main/main.controller.js"></script>
+        <script src="client/views/admin/admin.controller.js"></script>
+        <script src="client/views/fields/form-fields.controller.js"></script>
+        <script src="client/views/forms/forms.controller.js"></script>
+        <script src="client/views/header/header.controller.js"></script>
+        <script src="client/views/home/home.controller.js"></script>
+        <script src="client/views/sidebar/sidebar.controller.js"></script>
+        <script src="client/views/users/login.controller.js"></script>
+        <script src="client/views/users/profile.controller.js"></script>
+        <script src="client/views/users/register.controller.js"></script>
     </body>
 </html>
