@@ -21,7 +21,7 @@ _API.getAllUsers = function() {
 }
 
 _API.findUserById = function(userId) {
-  var found_user = _.find(user_data, function(i) {
+  var found_user = _.findWhere(user_data, function(i) {
     return i._id == userId;
   });
   return found_user || null;
@@ -31,7 +31,7 @@ _API.updateUserById = function(userId, user) {
   var found_user = _.findWhere(user_data, function(i) {
     return i._id == userId;
   });
-
+  
   if(found_user) { 
     found_user.firstName = user.firstName;
     found_user.lastName  = user.lastName; 
@@ -44,19 +44,11 @@ _API.updateUserById = function(userId, user) {
 }
 
 _API.findUserByCredentials = function(creds) {
-  var found_user = _.find(user_data, function(u) {
-    return u.username == creds.username && u.password == creds.password;
-  });
-
-  return found_user || null;
+  return _.findWhere(user_data, {username: creds.username, password: creds.password}) || null;
 }
 
 _API.findUserByUsername = function(username) {
-  var found_user = _find(user_data, function(u) {
-    return u.username = username;
-  });
-
-  return found_user || null;
+  return _findWhere(user_data, {username: username}) || null;
 }
 
 module.exports = _API;

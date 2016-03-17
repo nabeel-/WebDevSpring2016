@@ -23,7 +23,7 @@ module.exports = function(app, userModel) {
     var creds = {username: req.query.username, password: req.query.password},
         resp  = userModel.findUserByCredentials(creds);
 
-    resp ? resp : error("Invalid credentials used.");
+    resp = resp ? resp : error("Invalid credentials used.");
 
     res.json(resp);
   }
@@ -32,7 +32,7 @@ module.exports = function(app, userModel) {
     var username = req.query.username,
         resp     = userModel.findUserByUsername(username);
 
-    resp ? resp : error("User with username: " + username + " not found.");
+    resp = resp ? resp : error("User with username: " + username + " not found.");
 
     res.json(resp);
   }
@@ -52,7 +52,7 @@ module.exports = function(app, userModel) {
   });
 
   function error(msg) {
-    return error = { errors: [ { status: 400, detail: msg} ]};
+    return { errors: [ { status: 400, detail: msg} ]};
   }
 
 };

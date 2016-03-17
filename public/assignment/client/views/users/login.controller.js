@@ -7,15 +7,16 @@
 
     $scope.login = function() {
 
-      UserService.findUserByCredentials(
-        $scope.username,
-        $scope.password
-      ).then(function(resp) {
-        $rootScope.currentUser = resp;
-        $rootScope.loggedIn    = true;
-        $rootScope.isAdmin     = _.contains(resp.roles, 'admin');
-        $location.url("/profile");
-      });
+      UserService
+        .findUserByCredentials($scope.username, $scope.password)
+        .then(function(resp) {
+          if(resp.status == 200) {
+            $rootScope.currentUser = resp.data;
+            $rootScope.loggedIn    = true;
+            $rootScope.isAdmin     = _.contains(resp.data.roles, 'admin');
+            $location.url("/profile");
+          }
+        });
     };
     
   };
