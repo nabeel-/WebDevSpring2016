@@ -1,54 +1,55 @@
-var user_data = require("./user.mock.json"),
+(function() {
+  var form_data = require("./form.mock.json"),
     _         = require('underscore');
 
-var _API = {};
+  var _API = {};
 
-_API.deleteUserById = function(userId) {
-  user_data = _.reject(user_data, function(user) {
-      return user._id == userId;
-    });
-  return user_data;
-}
+  _API.createFormForUser = function(userId, form) {
+    var _id = toString((new Date).getTime());
 
-_API.createUser = function(user) {
-  user._id = (new Date).getTime();
-  user_data.push(user);
-  return user;
-}
+    form._id    = _id;
+    form.userId = parseInt(userId);
+    form_data.push(form);
 
-_API.getAllUsers = function() {
-  return user_data;
-}
-
-_API.findUserById = function(userId) {
-  var found_user = _.findWhere(user_data, function(i) {
-    return i._id == userId;
-  });
-  return found_user || null;
-}
-
-_API.updateUserById = function(userId, user) {
-  var found_user = _.findWhere(user_data, function(i) {
-    return i._id == userId;
-  });
-  
-  if(found_user) { 
-    found_user.firstName = user.firstName;
-    found_user.lastName  = user.lastName; 
-    found_user.username  = user.username; 
-    found_user.password  = user.password;
-    found_user.email     = user.email;  
+    return form || null;
   }
 
-  return found_user || null;
-}
+  _API.findAllFormsForUser = function(userId) {
+    var found_forms = _.filter(form_data, function(f) {
+      return f.userId == userId;
+    });
 
-_API.findUserByCredentials = function(creds) {
-  return _.findWhere(user_data, {username: creds.username, password: creds.password}) || null;
-}
+    return found_forms || null;
+  }
 
-_API.findUserByUsername = function(username) {
-  return _findWhere(user_data, {username: username}) || null;
-}
+  _API.findFormById = function(formId) {
+    var found_form = _.findWhere(form_data, {_id: formId});
 
-module.exports = _API;
+    return found_form || null;
+  }
+
+  _API.deleteFormById = function(formId) {
+    form_data = _.reject(form_data, function(form) {
+      return form._id == formId;
+    });
+
+    return form_data || null;
+  }
+
+  _API.updateFormById = function(formId, newForm) {
+    var found_form = _.findWhere(form_data, {_id: formId});
+    
+    if(found_form) { 
+      found_form.title = newForm.title; 
+    }
+    
+    return found_form || null;
+  }
+
+  _API.findformByTitle = function(title) {
+    var found_form = _findWhere(form_data, {title: title});
+    return found_form || null;
+  }
+
+  module.exports = _API;
+})();

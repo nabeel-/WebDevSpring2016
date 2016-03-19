@@ -3,42 +3,27 @@
 
   angular.module("FormBuilderApp").factory("FormService", FormService);
 
-  function FormService($rootScope) {
+  function FormService($rootScope, $http) {
 
-    var forms = [{"_id": "000", "title": "Contacts", "userId": 123},
-                 {"_id": "010", "title": "ToDo",     "userId": 123},
-                 {"_id": "020", "title": "CDs",      "userId": 234}];
+    var API_BASE      = "/api/assignment/",
+        API_BASE_FORM = API_BASE + "form/";
 
-    function createFormForUser(userId, form, callback) {
-      var _id = (new Date).getTime();
-
-      form._id    = _id;
-      form.userId = userId;
-      forms.push(form);
-
-      callback(form);
+    function createFormForUser(userId, form) {
+      return $http.post(API_BASE + userId + "/form", form);
     }
 
-    function findAllFormsForUser(userId, callback) {
-      var found_forms = _.where(forms, {userId: userId});
-
-      callback(found_forms);
+    function findAllFormsForUser(userId) {
+      return $http.get(API_BASE + userId + "/form");
     }
 
-    function deleteFormById(formId, callback) {
-      forms = _.reject(forms, function(form) {
-        return form._id == formId;
-      });
-
-      callback(forms);
+    function deleteFormById(formId) {
+      return $http.delete(API_BASE_FORM + formId);
     }
 
-    function updateFormById(formId, newForm, callback) {
-      var found_form = _.findWhere(forms, {_id: formId});
-
-      if(found_form) { found_form = newForm; }
-      
-      callback(found_form);
+    function updateFormById(formId, newForm) {
+      console.log(API_BASE_FORM + formId);
+      console.log(newForm);
+      return $http.put(API_BASE_FORM + formId, newForm);
     }
 
     var service = {

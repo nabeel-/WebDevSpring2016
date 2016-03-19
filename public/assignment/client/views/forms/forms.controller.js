@@ -3,45 +3,48 @@
 
   angular.module("FormBuilderApp").controller("FormsController", FormsController);
 
-  function FormsController($scope, $rootScope, $location, FormService) {
+  function FormsController($rootScope, $location, FormService) {
 
-    var currentUser = $rootScope.currentUser;
+    var currentUser = $rootScope.currentUser,
+        ctrl        = this;
 
-    FormService.findAllFormsForUser(currentUser._id, function(forms) {
-      $scope.forms = forms;
+    FormService.findAllFormsForUser(currentUser._id).then(function(resp) {
+      ctrl.forms = resp.data;
     });
+    
+    ctrl.addForm = function(title) {
+      if (title) {
+        var form = { title: title }
 
-    $scope.addForm = function() {
-      if ($scope.title) {
-        var form = { title: $scope.formTitle }
-
-        FormService.createFormForUser(currentUser._id, form, function(form) {
-          $scope.forms.push(form);
+        FormService.createFormForUser(currentUser._id, form).then(function(resp) {
+          ctrl.forms.push(resp.data);
         });
       }
     }
 
-    $scope.deleteForm = function(form) {
-      FormService.deleteFormById(form._id, function(forms) {
-        $scope.forms = _.reject($scope.forms, function(f) { return f._id == form._id; });
+    ctrl.deleteForm = function(ind) {
+      var form = ctrl.forms[ind];
+      FormService.deleteFormById(form._id).then(function(resp) {
+        ctrl.forms = _.reject(resp.data, function(f) { return f.userId != currentUser._id; });
       });
     }
 
-    $scope.updateForm = function() {
-      var form = { title: $scope.title };
-
-      FormService.updateFormById($scope.selected, form, function(form) {
-        $scope.forms[$scope.selected] = form;
+    ctrl.updateForm = function() {
+      var form = { title: ctrl.title },
+          id   = ctrl.selected;
+      FormService.updateFormById(id, form).then(function(resp) {
+        var ind = _.findIndex(ctrl.forms, function(f) {return f._id == id});
+        ctrl.forms[ind] = resp.data;
       });
     }
 
-    $scope.selectForm = function(form) {
-      $scope.selected  = form._id;
-      $scope.title     = form.title;
+    ctrl.selectForm = function(ind) {
+      ctrl.selected = ctrl.forms[ind]._id;
+      ctrl.title = ctrl.forms[ind].title;
     }
 
-    $scope.isSelected = function(form) {
-      return $scope.selected = form._id;
+    ctrl.isSelected = function(form) {
+      return ctrl.selected == form._id;
     }
   }
 })();
