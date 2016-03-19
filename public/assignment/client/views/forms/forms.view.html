@@ -4,7 +4,7 @@
         <!-- Nav tabs -->
         <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active"><a href="#forms" aria-controls="forms" role="tab" data-toggle="tab">Forms</a></li>
-            <li role="presentation"><a href="form-fields.html" aria-controls="fields" role="tab">Fields</a></li>
+            <li role="presentation"><a href="#fields" aria-controls="fields" role="tab">Fields</a></li>
         </ul>
         <!-- Tab panes -->
         <div class="tab-content">
@@ -32,7 +32,7 @@
                         </thead>
                         <tbody>
                             <tr ng-class="{ selected: isSelected(form) }" ng-repeat="form in ctrl.forms">
-                                <td>{{form.title}}</td>
+                                <td><a ng-href="#/form/{{form._id}}/fields">{{form.title}}</a></td>
                                 <td>
                                     <div class="btn-group" role="group">
                                         <button type="button" class="btn btn-default" ng-click="ctrl.deleteForm($index)">

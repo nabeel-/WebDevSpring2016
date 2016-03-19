@@ -1,5 +1,6 @@
 var user_data = require("./user.mock.json"),
-    _         = require('underscore');
+    _         = require('underscore'),
+    uuid      = require('node-uuid');
 
 var _API = {};
 
@@ -11,7 +12,7 @@ _API.deleteUserById = function(userId) {
 }
 
 _API.createUser = function(user) {
-  user._id = (new Date).getTime();
+  user._id = uuid.v4();
   user_data.push(user);
   return user;
 }
