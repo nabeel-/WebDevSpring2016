@@ -118,6 +118,23 @@ angular
           }
         }
     })
+      .state('dashboard.classes', {
+        url:'/classes',
+        controller: 'ClassesCtrl',
+        controllerAs: 'model',
+        templateUrl: 'views/classes/classes.view.html',
+        resolve: {
+          loadProfile: function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+              name:'TutorConnect',
+              files:[
+                'scripts/controllers/classes.controller.js',
+                'scripts/services/classes.service.js'
+              ]
+            });
+          }
+        }
+    })
       .state('login',{
         templateUrl:'views/pages/login.html',
         controller: 'LoginCtrl',

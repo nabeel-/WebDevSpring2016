@@ -1,0 +1,24 @@
+<div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h1 class="page-header">My Scheduled Classes</h1>
+        </div>
+        <!-- /.col-lg-12 -->
+    </div>
+    
+    <!-- /.panel -->
+    <div class="row">
+        <div class="col-lg-8">
+            <div ng-repeat="class in model.my.classes">
+              <p>{{class.name}}</p>
+              <p>{{class.tutorId}}</p>
+            </div>
+        </div>
+        <!-- /.col-lg-8 -->
+        <div class="col-lg-4">
+
+        </div>
+        <!-- /.col-lg-4 -->
+    </div>
+    <!-- /.row -->
+</div>
