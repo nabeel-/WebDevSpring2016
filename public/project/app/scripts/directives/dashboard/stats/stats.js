@@ -14,7 +14,7 @@ angular.module('TutorConnect')
   		scope: {
         'model': '=',
         'comments': '@',
-        'number': '@',
+        'text': '@',
         'name': '@',
         'colour': '@',
         'details':'@',
