@@ -7,6 +7,6 @@
  * Controller of the TutorConnect
  */
 angular.module('TutorConnect')
-  .controller('MainCtrl', function($scope, $rootScope, $state) {
+  .controller('MainCtrl', function() {
 
   });

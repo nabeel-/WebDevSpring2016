@@ -5,7 +5,7 @@ describe('Controller: ProfileCtrl', function () {
   // load the controller's module
   beforeEach(module('TutorConnect'));
 
-  var ProfileCtrl, UserMock, rootScope, scope;
+  var ProfileCtrl, UserMock, rootScope;
 
   var userBob = {'_id':234, 'firstName':'Bob','lastName':'Hope', 'username':'bob', 'password':'bob', 'roles': ['admin']};
 
@@ -33,24 +33,22 @@ describe('Controller: ProfileCtrl', function () {
     rootScope = $rootScope;
     rootScope.currentUser = userBob; // controller expects currentUser to be defined when instantiated
 
-    scope = $rootScope.$new();
-
     UserMock = UserService;
     ProfileCtrl = $controller('ProfileCtrl', {
-      $rootScope: rootScope,
-      $scope: scope
+      $rootScope: rootScope
     });
   }));
 
   describe('#update', function() {
     it ('should update the currentUser with values from the scope', function() {
+      var that = ProfileCtrl;
 
-      scope.username = userBob.username;
-      scope.password = userBob.password;
-      scope.firstName = 'new';            //simulate updated data
-      scope.lastName  = userBob.lastName;
+      that.my.username = userBob.username;
+      that.my.password = userBob.password;
+      that.my.firstName = 'new';            //simulate updated data
+      that.my.lastName  = userBob.lastName;
 
-      scope.update();
+      that.update();
 
       expect(rootScope.currentUser.firstName).toBe('new');
     });

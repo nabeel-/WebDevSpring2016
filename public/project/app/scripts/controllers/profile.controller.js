@@ -7,31 +7,28 @@
  * Controller of the TutorConnect
  */
 angular.module('TutorConnect')
-  .controller('ProfileCtrl', function($scope, $rootScope, $state, UserService) {
+  .controller('ProfileCtrl', function($rootScope, $state, UserService) {
 
-    $scope.username  = $rootScope.currentUser.username;
-    $scope.firstName = $rootScope.currentUser.firstName;
-    $scope.lastName = $rootScope.currentUser.lastName;
-    $scope.email = $rootScope.currentUser.email;
+    var vm = this;
 
-    var currentUser = $rootScope.currentUser;
+    vm.my = $rootScope.currentUser;
 
-    $scope.update = function() {
+    vm.update = function() {
 
       // Generate new user object with updated attributes
       var updatedUser = {
-        username:  $scope.username  || currentUser.username,
-        password:  $scope.password  || currentUser.password,
-        firstName: $scope.firstName || currentUser.firstName,
-        lastName:  $scope.lastName  || currentUser.lastName,
-        email:     $scope.email
+        username:  vm.my.username,
+        password:  vm.my.password,
+        firstName: vm.my.firstName,
+        lastName:  vm.my.lastName,
+        email:     vm.my.email 
       };
 
       var callback = function(user) {
         if (user) { $state.go('dashboard.profile'); }
       };
 
-      UserService.updateUser(currentUser._id, updatedUser, callback);
-    }
+      UserService.updateUser(vm.my._id, updatedUser, callback);
+    };
 
   });

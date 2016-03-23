@@ -34,11 +34,11 @@ angular
               {
                 name: 'TutorConnect',
                 files:['views/header/header.controller.js']
-              })
+              });
             }
         }
       })
-      .state('dashboard', {
+      .state('dashboard', { 
         url:'/dashboard',
         templateUrl: 'views/dashboard/main.html',
         resolve: {
@@ -46,35 +46,35 @@ angular
                 return $ocLazyLoad.load(
                 {
                    name:'toggle-switch',
-                   files:["bower_components/angular-toggle-switch/angular-toggle-switch.min.js",
-                          "bower_components/angular-toggle-switch/angular-toggle-switch.css"
+                   files:['bower_components/angular-toggle-switch/angular-toggle-switch.min.js',
+                          'bower_components/angular-toggle-switch/angular-toggle-switch.css'
                       ]
                 }),
                 $ocLazyLoad.load(
                 {
                   name:'ngAnimate',
                   files:['bower_components/angular-animate/angular-animate.js']
-                })
+                }),
                 $ocLazyLoad.load(
                 {
                   name:'ngCookies',
                   files:['bower_components/angular-cookies/angular-cookies.js']
-                })
+                }),
                 $ocLazyLoad.load(
                 {
                   name:'ngResource',
                   files:['bower_components/angular-resource/angular-resource.js']
-                })
+                }),
                 $ocLazyLoad.load(
                 {
                   name:'ngSanitize',
                   files:['bower_components/angular-sanitize/angular-sanitize.js']
-                })
+                }),
                 $ocLazyLoad.load(
                 {
                   name:'ngTouch',
                   files:['bower_components/angular-touch/angular-touch.js']
-                })
+                });
             },
             auth: function ($q, $rootScope) {
                 if ($rootScope.currentUser) {
@@ -88,6 +88,7 @@ angular
       .state('dashboard.home',{
         url:'/home',
         controller: 'MainCtrl',
+        controllerAs: 'model',
         templateUrl:'views/dashboard/home.html',
         resolve: {
           loadMyFiles:function($ocLazyLoad) {
@@ -97,13 +98,14 @@ angular
               'scripts/controllers/main.js',
               'scripts/directives/dashboard/stats/stats.js'
               ]
-            })
+            });
           }
         }
     })
       .state('dashboard.profile', {
         url:'/profile',
         controller: 'ProfileCtrl',
+        controllerAs: 'model',
         templateUrl: 'views/users/profile.view.html',
         resolve: {
           loadProfile: function($ocLazyLoad) {
@@ -112,7 +114,7 @@ angular
               files:[
                 'scripts/controllers/profile.controller.js'
               ]
-            })
+            });
           }
         }
     })
@@ -128,7 +130,7 @@ angular
               'scripts/controllers/login.js',
               'scripts/services/user.service.js'
               ]
-            })
+            });
           }
         }
     })
@@ -148,14 +150,14 @@ angular
             $ocLazyLoad.load({
                 name:'TutorConnect',
                 files:['scripts/controllers/chartContoller.js']
-            })
+            });
           }
         }
-    })
+    });
   }])
   .run(function($rootScope, $state) {
-    $rootScope.$on('$stateChangeStart', function(e, toState, toParams, fromState, fromParams) {
-        var noLogin = toState.name === "login" || "landing";
+    $rootScope.$on('$stateChangeStart', function(e, toState) {
+        var noLogin = toState.name === 'login' || 'landing';
         if(noLogin){
            return; // no need to redirect 
         }
@@ -163,7 +165,7 @@ angular
             e.preventDefault(); // stop current execution
             $state.go('login'); // go to login
         }
-    })
+    });
   });
 
     

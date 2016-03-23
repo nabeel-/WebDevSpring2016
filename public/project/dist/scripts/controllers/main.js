@@ -1,1 +1,0 @@
-"use strict";angular.module("TutorConnect").controller("MainCtrl",function($scope,$rootScope,$state){});

@@ -12,7 +12,7 @@ angular.module('TutorConnect')
     $scope.login = function() {
       var callback = function(user) {
         $rootScope.currentUser = user;
-        $state.go("dashboard.home");
+        $state.go('dashboard.home');
       };
       UserService.findUserByCredentials(
         $scope.username,
