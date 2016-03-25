@@ -7,12 +7,15 @@
  * Controller of the TutorConnect
  */
 angular.module('TutorConnect')
-  .controller('ClassesCtrl', function($rootScope, $uibModal, ClassesService, moment, _) {
+  .controller('ClassesCtrl', function($rootScope, $uibModal, ClassesService, TutorService, moment, _) {
 
     var vm = this;
 
     vm.my = $rootScope.currentUser;
-    vm.tutors = [{_id:321, name:'Dina'}, {_id:333, name:'Nick'}, {_id:454, name:'Mohamed'}, {_id:222, name:'Amirah'}];
+
+    TutorService.getAllTutors(function(data) {
+      vm.tutors = data;
+    });
 
     ClassesService.getAllClassesForUser(vm.my._id, function(data) {
       vm.my.classes = data;

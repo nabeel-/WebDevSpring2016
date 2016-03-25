@@ -131,7 +131,8 @@ angular
               files:[
                 'scripts/controllers/classes.controller.js',
                 'scripts/controllers/class-edit.controller.js',
-                'scripts/services/classes.service.js'
+                'scripts/services/classes.service.js',
+                'scripts/services/tutor.service.js'
               ]
             });
           }
