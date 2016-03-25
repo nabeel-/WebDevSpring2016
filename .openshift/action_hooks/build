@@ -5,6 +5,6 @@ cd $OPENSHIFT_REPO_DIR
 export HOME=$OPENSHIFT_REPO_DIR/public/project
 echo $HOME
 
-grunt build --gruntfile ./public/project/Gruntfile.js
+grunt build
 
 export HOME=$OLD_HOME
