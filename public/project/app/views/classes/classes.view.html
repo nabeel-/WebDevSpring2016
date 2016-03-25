@@ -25,9 +25,9 @@
               </thead>
               <tbody> 
                 <tr ng-repeat="class in model.my.classes | orderBy: model.sortClasses"> 
-                  <td>{{class.date}}</td>
-                  <td>{{class.startTime}}</td>
-                  <td>{{class.endTime}}</td>
+                  <td>{{model.parseDate(class.startTime)}}</td>
+                  <td>{{model.parseTime(class.startTime)}}</td>
+                  <td>{{model.parseTime(class.endTime)}}</td>
                   <td>{{class.tutorName}}</td>
                   <td>{{class.description}}</td>
                   <td>

@@ -4,10 +4,10 @@
   angular.module('TutorConnect').factory('ClassesService', function($rootScope, _) {
 
     var classes = [
-      {'_id':111, 'userId':123, 'tutorId':321, 'tutorName': 'Dina', 'description':'Prepare for upcoming Math test', 'startTime': '04:30PM', 'endTime': '06:00PM', 'date': '04/12/16'},
-      {'_id':222, 'userId':234, 'tutorId':321, 'tutorName': 'Dina', 'description':'Prepare for upcoming History test', 'startTime': '04:30PM', 'endTime': '05:30PM', 'date': '04/7/16'},
-      {'_id':333, 'userId':123, 'tutorId':321, 'tutorName': 'Dina', 'description':'Extra help on Science homework', 'startTime': '05:00PM', 'endTime': '05:30PM', 'date': '04/9/16'},
-      {'_id':444, 'userId':234, 'tutorId':321, 'tutorName': 'Dina', 'description':'Extra help on Science homework', 'startTime': '05:00PM', 'endTime': '06:00PM', 'date': '04/10/16'}
+      {'_id':111, 'userId':123, 'tutorId':321, 'tutorName': 'Dina', 'description':'Prepare for upcoming Math test', 'startTime': '2016-04-12 16:30', 'endTime': '2016-04-12 18:00'},
+      {'_id':222, 'userId':234, 'tutorId':321, 'tutorName': 'Dina', 'description':'Prepare for upcoming History test', 'startTime': '2016-04-7 16:30', 'endTime': '2016-04-7 17:30'},
+      {'_id':333, 'userId':123, 'tutorId':321, 'tutorName': 'Dina', 'description':'Extra help on Science homework', 'startTime': '2016-04-9 17:00', 'endTime': '2016-04-9 17:30'},
+      {'_id':444, 'userId':234, 'tutorId':321, 'tutorName': 'Dina', 'description':'Extra help on Science homework', 'startTime': '2016-04-10 17:00', 'endTime': '2016-04-10 18:00'}
     ];
 
     function getAllClassesForUser(userId, callback) {
@@ -22,8 +22,20 @@
       getAllClassesForUser(userId, callback);
     }
 
+    function updateClassById(classId, klass, callback) {
+      for(var i in classes) {
+        if(classes[i]._id === classId) {
+          classes[i].description = klass.description;
+          classes[i].startTime   = klass.startTime;
+          classes[i].endTime     = klass.endTime;
+          callback(classes[i]);
+        }
+      }
+    }
+
     var service = {
       getAllClassesForUser : getAllClassesForUser,
+      updateClassById: updateClassById,
       cancelClassById: cancelClassById
     };
 

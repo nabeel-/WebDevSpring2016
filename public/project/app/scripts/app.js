@@ -13,7 +13,8 @@ angular
     'ui.router',
     'ui.bootstrap',
     'angular-loading-bar',
-    'underscore'
+    'underscore',
+    'angularMoment'
   ])
   .config(['$stateProvider','$urlRouterProvider','$ocLazyLoadProvider',function($stateProvider,$urlRouterProvider,$ocLazyLoadProvider) {
     
@@ -129,6 +130,7 @@ angular
               name:'TutorConnect',
               files:[
                 'scripts/controllers/classes.controller.js',
+                'scripts/controllers/class-edit.controller.js',
                 'scripts/services/classes.service.js'
               ]
             });
