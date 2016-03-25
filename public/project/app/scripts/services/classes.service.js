@@ -33,10 +33,19 @@
       }
     }
 
+    function addClassForUser(userId, klass, callback) {
+      klass._id = new Date().toString();
+      klass.userId = userId;
+
+      classes.push(klass);
+      getAllClassesForUser(userId, callback);
+    }
+
     var service = {
       getAllClassesForUser : getAllClassesForUser,
       updateClassById: updateClassById,
-      cancelClassById: cancelClassById
+      cancelClassById: cancelClassById,
+      addClassForUser: addClassForUser
     };
 
     return service;

@@ -78,4 +78,17 @@ angular.module('TutorConnect')
         vm.newKlass.endTime = new Date(newEnd);
       }
     };
+
+    vm.addBlock = function() {
+      vm.newKlass.startTime = moment(vm.newKlass.startTime).format('YYYY-MM-DD HH:mm');
+      vm.newKlass.endTime   = moment(vm.newKlass.endTime).format('YYYY-MM-DD HH:mm');
+
+      vm.newKlass.tutorId   = vm.newKlass.tutor._id;
+      vm.newKlass.tutorName = vm.newKlass.tutor.name;
+      delete vm.newKlass.tutor; 
+
+      ClassesService.addClassForUser(vm.my._id, vm.newKlass, function(data) {
+        vm.my.classes = data;
+      });
+    };
   });
