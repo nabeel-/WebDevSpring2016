@@ -1,54 +1,28 @@
 (function() {
   'use strict';
 
-  angular.module('TutorConnect').factory('UserService', function($rootScope, _) {
+  angular.module('TutorConnect').factory('UserService', function($http) {
 
-    var users = [
-      {'_id':123, 'firstName':'Alice', 'lastName':'Wonderland',
-      'username':'alice', 'password':'alice', 'roles': ['student']},
-      {'_id':234, 'firstName':'Bob','lastName':'Hope',
-      'username':'bob', 'password':'bob', 'roles': ['admin']},
-      {'_id':345, 'firstName':'Charlie','lastName':'Brown',
-      'username':'charlie', 'password':'charlie', 'roles': ['faculty']},
-      {'_id':456, 'firstName':'Dan', 'lastName':'Craig',
-      'username':'dan', 'password':'dan', 'roles': ['faculty', 'admin']},
-      {'_id':567, 'firstName':'Edward','lastName':'Norton',
-      'username':'ed', 'password':'ed', 'roles': ['student']}
-    ];
+    var API_BASE = '/api/project/user/';
 
-    function findUserByCredentials(username, password, callback) {
-      var foundUser = _.findWhere(users, {username: username, password: password});
-
-      callback(foundUser);
+    function findUserByCredentials(username, password) {
+      return $http.get(API_BASE + '?username=' + username + '&password=' + password);
     }
 
-    function findAllUsers(callback) {
-      callback(users);
+    function findAllUsers() {
+      return $http.get(API_BASE);
     }
 
-    function createUser(user, callback) {
-      user._id = new Date().getTime();
-      users.push(user);
-      callback(user);
+    function createUser(user) {
+      return $http.post(API_BASE, user);
     }
 
-    function deleteUserById(userId, callback) {
-      users = _.reject(users, function(user) {
-        return user._id === userId;
-      });
-
-      callback(users);
+    function deleteUserById(userId) {
+      return $http.delete(API_BASE + userId);
     }
 
-    function updateUser(userId, user, callback) {
-      var foundUser = _.findWhere(users, {_id: userId});
-
-      if(foundUser) {
-        foundUser = user;
-        $rootScope.currentUser = foundUser;
-      }
-
-      callback(foundUser);
+    function updateUser(userId, user) {
+      return $http.put(API_BASE + userId, user);
     }
 
     var service = {

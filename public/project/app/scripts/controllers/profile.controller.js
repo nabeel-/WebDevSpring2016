@@ -24,11 +24,11 @@ angular.module('TutorConnect')
         email:     vm.my.email 
       };
 
-      var callback = function(user) {
-        if (user) { $state.go('dashboard.profile'); }
-      };
-
-      UserService.updateUser(vm.my._id, updatedUser, callback);
+      UserService.updateUser(vm.my._id, updatedUser).then(function(resp) {
+        if(resp) {
+          $state.go('dashboard.profile');
+        }
+      });
     };
 
   });

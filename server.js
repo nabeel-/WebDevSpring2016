@@ -10,6 +10,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 
 
-require("./public/assignment/server/app.js")(app, uuid);
+require('./public/assignment/server/app.js')(app, uuid);
+require('./public/project/app/scripts/server/app.js')(app);
 
 app.listen(port, ipaddress);
