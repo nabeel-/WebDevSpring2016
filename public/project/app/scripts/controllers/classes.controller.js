@@ -12,6 +12,7 @@ angular.module('TutorConnect')
     var vm = this;
 
     vm.my = $rootScope.currentUser;
+    vm.tutors = [{_id:321, name:'Dina'}, {_id:333, name:'Nick'}, {_id:454, name:'Mohamed'}, {_id:222, name:'Amirah'}];
 
     ClassesService.getAllClassesForUser(vm.my._id, function(data) {
       vm.my.classes = data;
@@ -51,4 +52,30 @@ angular.module('TutorConnect')
       return moment(time, 'HH:mm').format('h:mm A');
     };
 
+    // New klass for potentially adding
+    vm.newKlass = {};
+
+    vm.date = new Date();
+
+    vm.minStart = vm.newKlass.startTime = new Date().setHours(15, 30);
+    vm.minEnd   = vm.newKlass.endTime   = new Date().setHours(16, 0);
+
+    vm.maxStart = new Date().setHours(19, 0);
+    vm.maxEnd   = new Date().setHours(19, 30);
+
+    vm.startTimeChanged = function() {
+      
+      var startMoment = moment(vm.newKlass.startTime),
+          endMoment   = moment(vm.newKlass.endTime);
+
+      var newEnd = startMoment.minutes() === 0 ? 
+            new Date(vm.newKlass.startTime).setMinutes(30) : 
+            new Date(vm.newKlass.startTime).setHours(startMoment.hours() + 1, 0);
+
+      vm.minEnd = newEnd;
+
+      if(endMoment.isBefore(startMoment)) {
+        vm.newKlass.endTime = new Date(newEnd);
+      }
+    };
   });
