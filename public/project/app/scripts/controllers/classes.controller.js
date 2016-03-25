@@ -17,8 +17,10 @@ angular.module('TutorConnect')
       vm.tutors = data;
     });
 
-    ClassesService.getAllClassesForUser(vm.my._id, function(data) {
-      vm.my.classes = data;
+    ClassesService.getAllClassesForUser(vm.my._id).then(function(resp) {
+      if(resp) {
+        vm.my.classes = resp.data;
+      }
     });
 
     // Used for sorting classes. Uses 'klass' because 'class' is reserved word
@@ -27,8 +29,10 @@ angular.module('TutorConnect')
     };
 
     vm.cancelClass = function(classId) {
-      ClassesService.cancelClassById(classId, vm.my._id, function(data) {
-        vm.my.classes = data;
+      ClassesService.cancelClassById(classId, vm.my._id).then(function(resp) {
+        if(resp) {
+          vm.my.classes = resp.data;
+        }
       });
     };
 
@@ -36,7 +40,7 @@ angular.module('TutorConnect')
       var klass = _.findWhere(vm.my.classes, function(c) { return c._id === classId; });
 
       $rootScope.modal = $uibModal.open({
-        templateUrl: '/views/classes/class-edit.view.html',
+        templateUrl: '/project/app/views/classes/class-edit.view.html',
         controller: 'ClassEditCtrl',
         controllerAs: 'model',
         resolve: { klass: function() { return klass; }}
@@ -90,8 +94,10 @@ angular.module('TutorConnect')
       vm.newKlass.tutorName = vm.newKlass.tutor.name;
       delete vm.newKlass.tutor; 
 
-      ClassesService.addClassForUser(vm.my._id, vm.newKlass, function(data) {
-        vm.my.classes = data;
+      ClassesService.addClassForUser(vm.my._id, vm.newKlass).then(function(resp) {
+        if(resp) {
+          vm.my.classes = resp.data;
+        }
       });
     };
   });
