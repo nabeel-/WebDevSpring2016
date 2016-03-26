@@ -10,7 +10,6 @@
 module.exports = function (grunt) {
 
   var cwd = process.cwd();
-  console.log(cwd+'/../../');
   process.chdir(cwd+'/../../');
 
   require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
@@ -242,28 +241,6 @@ module.exports = function (grunt) {
     // concat: {
     //   dist: {}
     // },
-
-    imagemin: {
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>/images',
-          src: '{,*/}*.{png,jpg,jpeg,gif}',
-          dest: '<%= yeoman.dist %>/images'
-        }]
-      }
-    },
-
-    svgmin: {
-      dist: {
-        files: [{
-          expand: true,
-          cwd: '<%= yeoman.app %>/images',
-          src: '{,*/}*.svg',
-          dest: '<%= yeoman.dist %>/images'
-        }]
-      }
-    },
 
     htmlmin: {
       dist: {

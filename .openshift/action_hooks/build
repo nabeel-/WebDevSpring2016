@@ -4,6 +4,11 @@ OLD_HOME=$HOME
 cd $OPENSHIFT_REPO_DIR
 export HOME=$OPENSHIFT_REPO_DIR
 
+cd ./public/project
+bower install
+
+cd $OPENSHIFT_REPO_DIR
+
 ./node_modules/grunt-cli/bin/grunt build --gruntfile ./public/project/Gruntfile.js
 
 export HOME=$OLD_HOME
