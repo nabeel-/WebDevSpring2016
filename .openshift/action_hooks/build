@@ -2,8 +2,8 @@
 
 OLD_HOME=$HOME
 cd $OPENSHIFT_REPO_DIR
-export HOME=$OPENSHIFT_REPO_DIR/public/project
+export HOME=$OPENSHIFT_REPO_DIR
 
-./node_modules/grunt-cli/bin/grunt build
+./public/project/node_modules/grunt-cli/bin/grunt build
 
 export HOME=$OLD_HOME
