@@ -9,8 +9,12 @@
 
 module.exports = function (grunt) {
 
-  // Load grunt tasks automatically
-  require('load-grunt-tasks')(grunt);
+  var cwd = process.cwd();
+  console.log(cwd+'/../../');
+  process.chdir(cwd+'/../../');
+
+  require('matchdep').filterDev('grunt-*').forEach(grunt.loadNpmTasks);
+  process.chdir(cwd);
 
   // Configurable paths for the application
   var appConfig = {
