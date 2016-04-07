@@ -10,7 +10,7 @@
       UserService
         .findUserByCredentials($scope.username, $scope.password)
         .then(function(resp) {
-          if(resp.status == 200) {
+          if(resp.status == 200 && resp.data) {
             $rootScope.currentUser = resp.data;
             $rootScope.loggedIn    = true;
             $rootScope.isAdmin     = _.contains(resp.data.roles, 'admin');

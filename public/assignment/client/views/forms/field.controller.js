@@ -9,9 +9,8 @@
         ctrl   = this;
 
     FieldService.getFieldsForForm(formId).then(function(resp) {
-        if (resp.data) { ctrl.fields = resp.data; }
-      });
-    }
+      if (resp.data) { ctrl.fields = resp.data; }
+    });
 
     ctrl.showEditModal = function(index) {
       

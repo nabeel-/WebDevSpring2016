@@ -1,55 +1,87 @@
 module.exports = function(app, userModel) {
 
-  app.post("/api/assignment/user", function(req, res){
-    var new_user = userModel.createUser(req.body);
-    res.json(new_user);
-  });
+  app.post("/api/assignment/user", register);
+  app.get("/api/assignment/user", delegate);
+  app.get("/api/assignment/user/:id", findUserById);
+  app.put("/api/assignment/user/:id", updateUserById);
+  app.delete("/api/assignment/user/:id", deleteUserById);
 
-  app.delete("/api/assignment/user/:id", function(req, res){
+  function register(req, res) {
+    var resp = userModel.createUser(req.body);
+
+    resp.then(function(user) {
+      res.send(user);
+    }, function(err) {
+      res.status(400).send(err);
+    }); 
+  };
+
+  function deleteUserById(req, res){
     var users = userModel.deleteUserById(req.params.id);
-    res.json(users);
-  });
 
-  app.get("/api/assignment/user", function(req, res){
+    resp.then(function(user) {
+      res.send(user);
+    }, function(err) {
+      res.status(400).send(err);
+    });
+  };
+
+  function delegate(req, res){
     if(req.query.username) {
-      req.query.password ? authUser(req, res) : getUser(req, res);
+      req.query.password ? authUser(req, res) : findUserByUsername(req, res);
     } else {
-      var users = userModel.getAllUsers();
-      res.json(users);
+      var resp = userModel.getAllUsers();
+
+      resp.then(function(users) {
+        res.send(users);
+      }, function(err) {
+        res.status(400).send(err);
+      });
     }
-  });
+  };
 
   function authUser(req, res) {
     var creds = {username: req.query.username, password: req.query.password},
         resp  = userModel.findUserByCredentials(creds);
 
-    resp = resp ? resp : error("Invalid credentials used.");
+    resp.then(function(user) {
+      res.send(user);
+    }, function(err) {
+      res.status(400).send(err);
+    });
 
-    res.json(resp);
   }
 
-  function getUser(req, res) {
+  function findUserByUsername(req, res) {
     var username = req.query.username,
         resp     = userModel.findUserByUsername(username);
 
-    resp = resp ? resp : error("User with username: " + username + " not found.");
-
-    res.json(resp);
+    resp.then(function(user) {
+      res.send(user);
+    }, function(err) {
+      res.status(400).send(err);
+    });
   }
 
-  app.get("/api/assignment/user/:id", function(req, res){
-    var user = userModel.findUserById(req.params.id),
-        resp = user ? user : error("User with ID: " + req.params.id + " not found.");
+  function findUserById(req, res){
+    var resp = userModel.findUserById(req.params.id);
 
-    res.json(resp);
-  });
+    resp.then(function(user) {
+      res.send(user);
+    }, function(err) {
+      res.status(400).send(err);
+    });
+  };
 
-  app.put("/api/assignment/user/:id", function(req, res){
-    var updated_user = userModel.updateUserById(req.params.id, req.body),
-        resp         = updated_user ? updated_user : error("User with ID: " + req.params.id + " not found.");
+  function updateUserById(req, res){
+    var resp = userModel.updateUserById(req.params.id, req.body);
 
-    res.json(resp);
-  });
+    resp.then(function(user) {
+      res.send(user);
+    }, function(err) {
+      res.status(400).send(err);
+    });
+  };
 
   function error(msg) {
     return { errors: [ { status: 400, detail: msg} ]};

@@ -11,7 +11,8 @@
     $scope.password  = currentUser.password;
     $scope.firstName = currentUser.firstName;
     $scope.lastName  = currentUser.lastName;
-    $scope.email     = currentUser.email;
+    $scope.emails    = currentUser.emails;
+    $scope.phones    = currentUser.phones;
 
     $scope.update = function() {
 
@@ -21,14 +22,16 @@
         password:  $scope.password,
         firstName: $scope.firstName,
         lastName:  $scope.lastName,
-        email:     $scope.email
+        emails:    $scope.emails,
+        phones:    $scope.phones
       };
-
-      var callback = function(user) {
-        if (user) { $location.url("/profile"); }
-      };
-
-      UserService.updateUser(currentUser._id, updatedUser, callback);
+      
+      UserService.updateUser(currentUser._id, updatedUser).then(function(resp) {
+        if (resp.data) { 
+          $rootScope.currentUser = resp.data;
+          $location.url("/profile"); 
+        }
+      });
     }
   }
 })();

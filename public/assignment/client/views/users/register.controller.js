@@ -10,10 +10,11 @@
       var user = {
         username:  $scope.username,
         password:  $scope.password,
-        email:     $scope.email,
+        emails:     $scope.email,
+        phones:    [],
         firstName: null,
         lastName:  null,
-        roles:     []
+        roles:     ['default']
       };
 
       UserService.createUser(user).then(function(resp) {
