@@ -1,107 +1,89 @@
 (function() {
-  var form_data = require("./form.mock.json"),
-      _         = require('underscore'),
-      uuid      = require('node-uuid');
+  var mongoose    = require('mongoose'),
+      FormSchema  = require('./form.schema.server.js')(),
+      FieldSchema = require('./field.schema.server.js')(),
+      Form        = mongoose.model("Form", FormSchema),
+      Field       = mongoose.model("Field", FieldSchema);
 
-  var _API = {};
+  module.exports = function() {
 
-  _API.createFormForUser = function(userId, form) {
-    var _id = uuid.v4();
+    var _API = {
+      createFormForUser: createFormForUser,
+      findAllFormsForUser: findAllFormsForUser,
+      findFormById: findFormById,
+      deleteFormById: deleteFormById,
+      updateFormById: updateFormById,
+      findformByTitle: findformByTitle,
+      getFieldsForForm: getFieldsForForm,
+      getFieldForForm: getFieldForForm,
+      deleteFieldFromForm: deleteFieldFromForm,
+      createFieldForForm: createFieldForForm,
+      updateFieldForForm: updateFieldForForm
+    };
 
-    form._id    = _id;
-    form.userId = parseInt(userId);
-    form_data.push(form);
+    function createFormForUser(userId, form) {
+      form.userId = userId;
 
-    return form || null;
+      return Form.create(form);
+    }
+
+    function findAllFormsForUser(userId) {
+      return Form.find({userId: userId}).exec();
+    }
+
+    function findFormById (formId) {
+      return Form.findById(formId).populate('fields').exec();
+    }
+
+    function deleteFormById(formId) {
+      return Form.findByIdAndRemove(formId).exec();
+    }
+
+    function updateFormById(formId, newForm) {
+      return Form.findByIdAndUpdate(formId, newForm, {new: true}).exec();
+    }
+
+    function findformByTitle(title) {
+      return Form.findOne({title: title}).exec();
+    }
+
+    function getFieldsForForm(formId) {
+      return Form.findById(formId, 'fields').exec();
+    }
+
+    function getFieldForForm(formId, fieldId) {
+      return Form.find({ _id: formId, 'fields._id': fieldId}).exec();
+    }
+
+    function deleteFieldFromForm(formId, fieldId) {
+      return Form.findById(formId).exec(function(err, doc) {
+        doc.fields.id(fieldId).remove();
+        doc.save();
+      });
+    }
+
+    function createFieldForForm(formId, field) {
+      return Form.findById(formId).exec(function(err, doc) {
+        doc.fields.push(field);
+        doc.save();
+      });
+    }
+
+    function updateFieldForForm(formId, fieldId, field) {
+      _.each(form_data, function(f) {
+        if(f._id == formId) {
+          _.each(f.fields, function(fd) {
+            if(fd._id == fieldId) {
+              fd.label       = field.label;
+              fd.placeholder = field.placeholder;
+              fd.options     = field.options;
+              return fd;
+            }
+          });
+        }
+      });
+    }
+
+    return _API;
   }
-
-  _API.findAllFormsForUser = function(userId) {
-    var found_forms = _.filter(form_data, function(f) {
-      return f.userId == userId;
-    });
-
-    return found_forms || null;
-  }
-
-  _API.findFormById = function(formId) {
-    var found_form = _.findWhere(form_data, {_id: formId});
-
-    return found_form || null;
-  }
-
-  _API.deleteFormById = function(formId) {
-    form_data = _.reject(form_data, function(form) {
-      return form._id == formId;
-    });
-
-    return form_data || null;
-  }
-
-  _API.updateFormById = function(formId, newForm) {
-    _.each(form_data, function(f) {
-      if(f._id == formId) {
-        f.title = newForm.title;
-        return f;
-      }
-    });
-    
-    return null;
-  }
-
-  _API.findformByTitle = function(title) {
-    var found_form = _.findWhere(form_data, {title: title});
-    return found_form || null;
-  }
-
-  _API.getFieldsForForm = function(formId) {
-    var fields = _.findWhere(form_data, {_id: formId}).fields;
-    return fields || null;
-  }
-
-  _API.getFieldForForm = function(formId, fieldId) {
-    var fields = _.findWhere(form_data, {_id: formId}).fields,
-        field  = _.findWhere(fields, {_id: fieldId});
-
-    return field || null;
-  }
-
-  _API.deleteFieldFromForm = function(formId, fieldId) {
-    _.each(form_data, function(f) {
-      if(f._id == formId) {
-        var fields = _.reject(f.fields, function(fd) {
-          fd._id == fieldId;
-        });
-        f.fields = fields;
-        return f.fields;
-      }
-    });
-  }
-
-  _API.createFieldForForm = function(formId, field) {
-    field._id = uuid.v4();
-    _.each(form_data, function(f) {
-      if(f._id == formId) {
-        f.fields.push(field);
-        return f.fields;
-      }
-    });
-  }
-
-  _API.updateFieldForForm = function(formId, fieldId, field) {
-    _.each(form_data, function(f) {
-      if(f._id == formId) {
-        _.each(f.fields, function(fd) {
-          if(fd._id == fieldId) {
-            fd.label       = field.label;
-            fd.placeholder = field.placeholder;
-            fd.options     = field.options;
-            return fd;
-          }
-        });
-      }
-    });
-  }
-
-
-  module.exports = _API;
 })();

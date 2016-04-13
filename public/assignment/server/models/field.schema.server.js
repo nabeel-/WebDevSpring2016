@@ -10,6 +10,7 @@ var mongoose = require("mongoose");
      },
      placeholder: String,
      options: [{label: String, value: String}]
-   }, {collection: 'field'});
+   },
+   {collection: 'field'});
    return FieldSchema;
  }; 

@@ -8,7 +8,7 @@
     var API_BASE = "/api/assignment/form/";
 
     function getFieldsForForm(formId) {
-      return $http.get( API_BASE + formId + "/field");
+      return $http.get( API_BASE + formId + "/fields");
     }
 
     function getFieldForForm(formId, fieldId) {

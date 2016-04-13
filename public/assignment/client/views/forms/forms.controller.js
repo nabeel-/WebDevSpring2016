@@ -25,7 +25,7 @@
     ctrl.deleteForm = function(ind) {
       var form = ctrl.forms[ind];
       FormService.deleteFormById(form._id).then(function(resp) {
-        ctrl.forms = _.reject(resp.data, function(f) { return f.userId != currentUser._id; });
+        ctrl.forms = _.reject(ctrl.forms, function(f) { return f._id == resp.data._id; });
       });
     }
 

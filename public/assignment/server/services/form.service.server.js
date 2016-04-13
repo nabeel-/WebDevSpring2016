@@ -1,38 +1,59 @@
 module.exports = function(app, formModel) {
 
-  app.get("/api/assignment/:userId/form", function(req, res) {
-    var forms = formModel.findAllFormsForUser(req.params.userId);
+  app.get("/api/assignment/:userId/form", getFormsForUser);
+  app.post("/api/assignment/:userId/form", createFormForUser);
+  app.get("/api/assignment/form/:formId", getFormById);
+  app.delete("/api/assignment/form/:formId", deleteFormById);
+  app.put("/api/assignment/form/:formId", updateFormById);
 
-    res.json(forms);
-  });
+  function getFormsForUser(req, res) {
+    var resp = formModel.findAllFormsForUser(req.params.userId);
 
-  app.post("/api/assignment/:userId/form", function(req, res) {
-    var form = formModel.createFormForUser(req.params.userId, req.body);
+    resp.then(function(forms) {
+      res.send(forms);
+    }, function(err) {
+      res.status(400).send(err);
+    });
+  }
 
-    res.json(form);
-  });
+  function createFormForUser(req, res) {
+    var resp = formModel.createFormForUser(req.params.userId, req.body);
 
-  app.get("/api/assignment/form/:formId", function(req, res) {
-    var form = formModel.findFormById(req.params.formId);
+    resp.then(function(form) {
+      res.send(form);
+    }, function(err) {
+      res.status(400).send(err);
+    });
+  }
 
-    res.json(form);
-  });
+  function getFormById(req, res) {
+    var resp = formModel.findFormById(req.params.formId);
 
-  app.delete("/api/assignment/form/:formId", function(req, res){
-    var forms = formModel.deleteFormById(req.params.formId);
+    resp.then(function(form) {
+      res.send(form);
+    }, function(err) {
+      res.status(400).send(err);
+    });
+  }
 
-    res.json(forms);
-  });
+  function deleteFormById(req, res){
+    var resp = formModel.deleteFormById(req.params.formId);
 
-  app.put("/api/assignment/form/:formId", function(req, res){
-    var updated_form = formModel.updateFormById(req.params.formId, req.body),
-        resp         = updated_form ? updated_form : error("Form with ID: " + req.params.formId + " not found.");
+    resp.then(function(form) {
+      res.send(form);
+    }, function(err) {
+      res.status(400).send(err);
+    });
+  }
 
-    res.json(resp);
-  });
-  
-  function error(msg) {
-    return { errors: [ { status: 400, detail: msg} ]};
+  function updateFormById(req, res){
+    var resp = formModel.updateFormById(req.params.formId, req.body);
+        
+    resp.then(function(form) {
+      res.send(form);
+    }, function(err) {
+      res.status(400).send(err);
+    });
   }
 
 };
