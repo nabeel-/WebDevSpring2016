@@ -1,0 +1,25 @@
+<div>
+  <div class="modal-header">
+    <h3 class="modal-title">{{ctrl.field.type}}</h3>
+  </div>
+  <div class="modal-body">
+    <label>
+      Label
+      <input ng-model="ctrl.label" type="text" class="form-control">
+    </label>
+    <br>
+    <label ng-show="ctrl.show_placeholder">
+      Placeholder
+      <input ng-model="ctrl.placeholder" type="text" class="form-control">
+    </label>
+
+    <label ng-show="ctrl.show_options">
+      Options
+      <textarea ng-model="ctrl.options" rows="5" cols="50" class="form-control"></textarea>
+    </label>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="ctrl.ok()">OK</button>
+    <button class="btn btn-warning" type="button" ng-click="ctrl.cancel()">Cancel</button>
+  </div>
+</div>

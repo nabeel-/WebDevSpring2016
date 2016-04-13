@@ -70,18 +70,11 @@
     }
 
     function updateFieldForForm(formId, fieldId, field) {
-      _.each(form_data, function(f) {
-        if(f._id == formId) {
-          _.each(f.fields, function(fd) {
-            if(fd._id == fieldId) {
-              fd.label       = field.label;
-              fd.placeholder = field.placeholder;
-              fd.options     = field.options;
-              return fd;
-            }
-          });
-        }
-      });
+      return Form.findById(formId).exec(function(err, doc) {
+        doc.fields.id(fieldId).remove();
+        doc.fields.push(field);
+        doc.save();
+      })
     }
 
     return _API;

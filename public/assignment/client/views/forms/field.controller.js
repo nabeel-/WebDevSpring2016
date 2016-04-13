@@ -12,13 +12,24 @@
       if (resp.data) { ctrl.fields = resp.data.fields; }
     });
 
-    ctrl.showEditModal = function(index) {
-      
+    ctrl.showEditModal = function(field) {
+      $rootScope.modalInstance = $uibModal.open({
+        templateUrl: 'client/views/forms/fieldmodal.view.html',
+        controller: 'FieldModalController as ctrl',
+        resolve: {
+          field: function () {
+            return field;
+          },
+          formId: function() {
+            return formId;
+          }
+        }
+      });
     }
 
     ctrl.cloneField = function(field) {
       FieldService.createFieldForForm(formId, field).then(function(resp) {
-        ctrl.fields = resp.data;
+        ctrl.fields = resp.data.fields;
       });
     }
 

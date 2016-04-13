@@ -47,9 +47,13 @@ module.exports = function(app, formModel) {
   }
 
   function updateFieldForForm(req, res) {
-    var form = formModel.updateFieldForForm(req.params.formId, req.params.fieldId, req.body);
+    var resp = formModel.updateFieldForForm(req.params.formId, req.params.fieldId, req.body);
 
-    res.json(form);
+    resp.then(function(form) {
+      res.send(form);
+    }, function(err) {
+      res.status(400).send(err);
+    });
   }
 
 };
