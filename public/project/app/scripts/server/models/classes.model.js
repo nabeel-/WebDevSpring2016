@@ -8,8 +8,13 @@ module.exports = function() {
     getAllClassesForUser: getAllClassesForUser,
     cancelClassById: cancelClassById,
     updateClassById: updateClassById,
-    addClassForUser: addClassForUser
+    addClassForUser: addClassForUser,
+    getClassesForTutor: getClassesForTutor
   };
+
+  function getClassesForTutor(tutorId) {
+    return Klass.find({tutorId: tutorId}).exec();
+  }
 
   function getAllClassesForUser(userId) {
     return Klass.find({userId: userId}).populate('tutorId').exec();

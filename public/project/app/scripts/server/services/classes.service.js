@@ -2,6 +2,7 @@ module.exports = function(app, classesModel) {
 
   app.get('/api/project/user/:userId/classes', getAllClassesForUser);
   app.post('/api/project/user/:userId/class', addClassForUser);
+  app.get('/api/project/user/:userId/classes/tutor/:tutorId', getClassesForTutor);
   app.delete('/api/project/user/:userId/class/:classId', cancelClassById);
   app.put('/api/project/user/:userId/class/:classId', updateClassById);
 
@@ -40,6 +41,16 @@ module.exports = function(app, classesModel) {
     
     resp.then(function(klass) {
       res.send(klass);
+    }, function(err) {
+      res.status(400).send(err);
+    });
+  }
+
+  function getClassesForTutor(req, res) {
+    var resp = classesModel.getClassesForTutor(req.params.tutorId);
+
+    resp.then(function(classes) {
+      res.send(classes);
     }, function(err) {
       res.status(400).send(err);
     });

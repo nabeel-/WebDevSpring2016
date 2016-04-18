@@ -21,11 +21,16 @@
       return $http.post(API_BASE + userId + '/class/', klass);
     }
 
+    function getClassesForTutor(userId, tutorId) {
+      return $http.get(API_BASE + userId + '/classes/tutor/' + tutorId);
+    }
+
     var service = {
       getAllClassesForUser : getAllClassesForUser,
       updateClassById: updateClassById,
       cancelClassById: cancelClassById,
-      addClassForUser: addClassForUser
+      addClassForUser: addClassForUser,
+      getClassesForTutor: getClassesForTutor
     };
 
     return service;

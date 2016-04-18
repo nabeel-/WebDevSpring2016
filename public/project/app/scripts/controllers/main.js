@@ -7,12 +7,13 @@
  * Controller of the TutorConnect
  */
 angular.module('TutorConnect')
-  .controller('MainCtrl', function($rootScope, $state, TutorService) {
+  .controller('MainCtrl', function($rootScope, $state, TutorService, ClassesService) {
     var vm = this;
     
     vm.classNames = ['Math', 'Science', 'History', 'English', 'Spanish', 'French'];
     vm.myClassNames = [];
 
+    vm.nextBlock = {};
 
     vm.my = $rootScope.currentUser;
 
@@ -28,6 +29,18 @@ angular.module('TutorConnect')
               vm.my.subjects = resp.data.subjects;
             }
           });
+
+          ClassesService.getClassesForTutor(vm.my._id, vm.my.tutor._id).then(function(resp) {
+            if(resp.status === 200 && resp.data) {
+              vm.nextBlock.date = resp.data[0].startTime.split(' ')[0];
+            }
+          });
+        }
+      });
+    } else {
+      ClassesService.getAllClassesForUser(vm.my._id).then(function(resp) {
+        if(resp.status === 200 && resp.data) {
+          vm.nextBlock.date = resp.data[0].startTime.split(' ')[0];
         }
       });
     }

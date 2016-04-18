@@ -98,6 +98,7 @@ angular
               files:[
               'scripts/controllers/main.js',
               'scripts/services/tutor.service.js',
+              'scripts/services/classes.service.js',
               'scripts/directives/dashboard/stats/stats.js'
               ]
             });

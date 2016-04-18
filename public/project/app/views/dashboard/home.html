@@ -8,9 +8,9 @@
   <!-- /.row -->
   <div class="row">
 
-    <stats goto="dashboard.classes" lgsize="6" mdsize="6" text="4/15/2016" comments="Next scheduled class" colour="primary" type="calendar"></stats>
-    <stats goto="dashboard.chart" lgsize="3" mdsize="6" text="3" comments="New reports!" colour="info" type="bar-chart"></stats>
-    <stats goto="dashboard.home" lgsize="3" mdsize="6" text="Dina" comments="My Tutor" colour="green" type="user"></stats>
+    <stats ng-show="model.nextBlock.date" goto="dashboard.classes" lgsize="6" mdsize="6" text="{{model.nextBlock.date}}" comments="Next scheduled block" colour="primary" type="calendar"></stats>
+    <stats goto="dashboard.chart" lgsize="{{model.isTutor ? 6 : 3}}" mdsize="6" text="3" comments="New reports!" colour="info" type="bar-chart"></stats>
+    <stats ng-hide="model.isTutor" goto="dashboard.home" lgsize="3" mdsize="6" text="Dina" comments="My Tutor" colour="green" type="user"></stats>
 
   </div>
 
