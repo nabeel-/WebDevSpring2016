@@ -7,7 +7,7 @@
  * Controller of the TutorConnect
  */
 angular.module('TutorConnect')
-  .controller('ClassesCtrl', function($rootScope, $uibModal, ClassesService, TutorService, moment, _) {
+  .controller('ClassesCtrl', function($rootScope, $uibModal, $state, ClassesService, TutorService, moment, _) {
 
     var vm = this;
 
@@ -22,6 +22,11 @@ angular.module('TutorConnect')
     ClassesService.getAllClassesForUser(vm.my._id).then(function(resp) {
       if(resp.status === 200) {
         vm.my.classes = resp.data;
+        _.each(vm.my.classes, function(c) {
+          TutorService.getTutorFromUserId(c.tutorId.userId).then(function(resp) {
+            c.tutorName = resp.data.userId.firstName;
+          });
+        });
       }
     });
 
@@ -32,8 +37,8 @@ angular.module('TutorConnect')
 
     vm.cancelClass = function(classId) {
       ClassesService.cancelClassById(classId, vm.my._id).then(function(resp) {
-        if(resp) {
-          vm.my.classes = resp.data;
+        if(resp.status === 200) {
+          vm.my.classes = _.reject(vm.my.classes, function(c) { return c._id === resp.data._id; });
         }
       });
     };
@@ -42,7 +47,7 @@ angular.module('TutorConnect')
       var klass = _.findWhere(vm.my.classes, function(c) { return c._id === classId; });
 
       $rootScope.modal = $uibModal.open({
-        templateUrl: '/project/app/views/classes/class-edit.view.html',
+        templateUrl: 'views/classes/class-edit.view.html',
         controller: 'ClassEditCtrl',
         controllerAs: 'model',
         resolve: { klass: function() { return klass; }}
@@ -89,16 +94,20 @@ angular.module('TutorConnect')
     };
 
     vm.addBlock = function() {
+      vm.newKlass.startTime.setFullYear(vm.date.getFullYear(), vm.date.getMonth(), vm.date.getDate());
+      vm.newKlass.endTime.setFullYear(vm.date.getFullYear(), vm.date.getMonth(), vm.date.getDate());
+
       vm.newKlass.startTime = moment(vm.newKlass.startTime).format('YYYY-MM-DD HH:mm');
       vm.newKlass.endTime   = moment(vm.newKlass.endTime).format('YYYY-MM-DD HH:mm');
 
       vm.newKlass.tutorId   = vm.newKlass.tutor._id;
       vm.newKlass.tutorName = vm.newKlass.tutor.name;
-      delete vm.newKlass.tutor; 
 
       ClassesService.addClassForUser(vm.my._id, vm.newKlass).then(function(resp) {
         if(resp) {
-          vm.my.classes = resp.data;
+          resp.data.tutorName = vm.newKlass.tutor.userId.firstName;
+          vm.my.classes.push(resp.data);
+          $state.go('dashboard.classes');
         }
       });
     };

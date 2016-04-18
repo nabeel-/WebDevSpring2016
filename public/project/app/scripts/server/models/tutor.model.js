@@ -17,7 +17,7 @@ module.exports = function() {
   }
 
   function getTutorFromUserId(userId) {
-    return Tutor.findOne({userId: userId}).exec();
+    return Tutor.findOne({userId: userId}).populate('userId', 'firstName').exec();
   }
 
   function getSubjectsForTutor(tutorId) {

@@ -7,8 +7,8 @@ var mongoose = require("mongoose");
      tutorId: {type: mongoose.Schema.Types.Object, ref: 'Tutor_p'},
      description: String,
      subject: String,
-     startTime: Date,
-     endTime: Date
+     startTime: String,
+     endTime: String
    }, {collection: 'class_p'});
    return ClassSchema;
  };
