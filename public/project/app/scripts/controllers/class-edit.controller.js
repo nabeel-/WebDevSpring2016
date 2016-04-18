@@ -66,7 +66,7 @@ angular.module('TutorConnect')
       vm.klass.description = vm.description;
 
       ClassesService.updateClassById(vm.my._id, vm.klass._id, vm.klass).then(function(resp) {
-        if(resp) {
+        if(resp.status === 200) {
           $rootScope.modal.close();
         }
       });

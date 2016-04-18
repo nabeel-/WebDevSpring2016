@@ -44,7 +44,7 @@ angular.module('TutorConnect')
     };
 
     vm.editClass = function(classId) {
-      var klass = _.findWhere(vm.my.classes, function(c) { return c._id === classId; });
+      var klass = _.findWhere(vm.my.classes, {_id: classId});
 
       $rootScope.modal = $uibModal.open({
         templateUrl: 'views/classes/class-edit.view.html',
