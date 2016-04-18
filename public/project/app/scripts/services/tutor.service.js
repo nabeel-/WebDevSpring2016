@@ -1,26 +1,31 @@
 (function() {
   'use strict';
 
-  angular.module('TutorConnect').factory('TutorService', function($rootScope, _) {
+  angular.module('TutorConnect').factory('TutorService', function($http) {
 
-    var tutors = [{_id:321, name:'Dina'}, 
-                  {_id:333, name:'Nick'}, 
-                  {_id:454, name:'Mohamed'}, 
-                  {_id:222, name:'Amirah'}];
+    var API_BASE = 'http://localhost:3000/api/project/tutor/';
 
-    function getAllTutors(callback) {
-      callback(tutors);
+    function getAllTutors() {
+      return $http.get(API_BASE);
     }
 
-    function getTutorById(tutorId, callback) {
-      var foundTutor = _.findWhere(tutors, function(t) { return t._id === tutorId; });
+    function getSubjectsForTutor(tutorId) {
+      return $http.get(API_BASE + tutorId);
+    }
 
-      callback(foundTutor);
+    function createTutorWithUser(userId, tutor) {
+      return $http.post(API_BASE + 'user/' + userId, tutor);
+    }
+
+    function updateTutorById(tutorId, tutor) {
+      return $http.put(API_BASE + tutorId, tutor);
     }
 
     var service = {
-      getAllTutors : getAllTutors,
-      getTutorById: getTutorById
+      getAllTutors: getAllTutors,
+      getSubjectsForTutor : getSubjectsForTutor,
+      createTutorWithUser: createTutorWithUser,
+      updateTutorById: updateTutorById
     };
 
     return service;

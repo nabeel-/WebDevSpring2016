@@ -3,7 +3,7 @@
 
   angular.module('TutorConnect').factory('UserService', function($http) {
 
-    var API_BASE = '/api/project/user/';
+    var API_BASE = 'http://localhost:3000/api/project/user/';
 
     function findUserByCredentials(username, password) {
       return $http.get(API_BASE + '?username=' + username + '&password=' + password);

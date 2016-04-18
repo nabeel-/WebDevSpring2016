@@ -1,23 +1,48 @@
 module.exports = function(app, classesModel) {
 
-  app.get('/api/project/user/:userId/classes', function(req, res){
-    var classes = classesModel.getAllClassesForUser(req.params.userId);
-    res.json(classes);
-  });
+  app.get('/api/project/user/:userId/classes', getAllClassesForUser);
+  app.post('/api/project/user/:userId/class', addClassForUser);
+  app.delete('/api/project/user/:userId/class/:classId', cancelClassById);
+  app.put('/api/project/user/:userId/class/:classId', updateClassById);
 
-  app.post('/api/project/user/:userId/class', function(req, res){
-    var classes = classesModel.addClassForUser(req.params.userId, req.body);
-    res.json(classes);
-  });
+  function getAllClassesForUser(req, res) {
+    var resp = classesModel.getAllClassesForUser(req.params.userId);
 
-  app.delete('/api/project/user/:userId/class/:classId', function(req, res){
-    var classes = classesModel.cancelClassById(req.params.classId, req.params.userId);
-    res.json(classes);
-  });
+    resp.then(function(classes) {
+      res.send(classes);
+    }, function(err) {
+      res.status(400).send(err);
+    });
+  }
 
-  app.put('/api/project/user/:userId/class/:classId', function(req, res){
-    var updatedClass = classesModel.updateClassById(req.params.classId, req.body);
-    res.json(updatedClass);
-  });
+  function addClassForUser(req, res) {
+    var resp = classesModel.addClassForUser(req.params.userId, req.body);
+    
+    resp.then(function(klass) {
+      res.send(klass);
+    }, function(err) {
+      res.status(400).send(err);
+    });
+  }
+
+  function cancelClassById(req, res) {
+    var resp = classesModel.cancelClassById(req.params.classId);
+    
+    resp.then(function(klass) {
+      res.send(klass);
+    }, function(err) {
+      res.status(400).send(err);
+    });
+  }
+
+  function updateClassById(req, res){
+    var resp = classesModel.updateClassById(req.params.classId, req.body);
+    
+    resp.then(function(klass) {
+      res.send(klass);
+    }, function(err) {
+      res.status(400).send(err);
+    });
+  }
 
 };

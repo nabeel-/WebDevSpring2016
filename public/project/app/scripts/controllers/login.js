@@ -11,7 +11,7 @@ angular.module('TutorConnect')
     
     $scope.login = function() {
       UserService.findUserByCredentials($scope.username, $scope.password).then(function(resp) {
-        if(resp) {
+        if(resp.status === 200) {
           $rootScope.currentUser = resp.data;
           $state.go('dashboard.home');
         }

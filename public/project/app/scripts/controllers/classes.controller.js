@@ -13,12 +13,14 @@ angular.module('TutorConnect')
 
     vm.my = $rootScope.currentUser;
 
-    TutorService.getAllTutors(function(data) {
-      vm.tutors = data;
+    TutorService.getAllTutors().then(function(resp) {
+      if(resp.status === 200) {
+        vm.tutors = resp.data;
+      }
     });
 
     ClassesService.getAllClassesForUser(vm.my._id).then(function(resp) {
-      if(resp) {
+      if(resp.status === 200) {
         vm.my.classes = resp.data;
       }
     });

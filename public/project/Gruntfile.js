@@ -91,6 +91,11 @@ module.exports = function (grunt) {
           port: 9001,
           middleware: function (connect) {
             return [
+              function(req, res, next) {
+                res.setHeader('Access-Control-Allow-Origin', '*');
+                res.setHeader('Access-Control-Allow-Methods', '*');
+                next();
+              },
               connect.static('.tmp'),
               connect.static('test'),
               connect().use(

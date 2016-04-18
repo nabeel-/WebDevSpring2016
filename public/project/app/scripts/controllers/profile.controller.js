@@ -25,7 +25,7 @@ angular.module('TutorConnect')
       };
 
       UserService.updateUser(vm.my._id, updatedUser).then(function(resp) {
-        if(resp) {
+        if(resp.status === 200) {
           $state.go('dashboard.profile');
         }
       });

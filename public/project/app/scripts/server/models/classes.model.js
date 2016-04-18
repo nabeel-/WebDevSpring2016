@@ -1,36 +1,33 @@
-var classes = require('./classes.mock.json'),
-    _       = require('underscore'),
-    uuid    = require('node-uuid');
+var mongoose   = require('mongoose'),
+    ClassSchema = require("./classes.schema.server.js")(),
+    Klass       = mongoose.model("Class_p", ClassSchema);
 
-var _API = {};
+module.exports = function() {
 
-_API.getAllClassesForUser = function(userId) {
-  return _.filter(classes, function(c) { return c.userId == userId; });
-}
+  var _API = {
+    getAllClassesForUser: getAllClassesForUser,
+    cancelClassById: cancelClassById,
+    updateClassById: updateClassById,
+    addClassForUser: addClassForUser
+  };
 
-_API.cancelClassById = function(classId, userId) {
-  classes = _.reject(classes, function(c) { return c._id === classId; });
-
-  return _API.getAllClassesForUser(userId);
-}
-
-_API.updateClassById = function(classId, klass) {
-  for(var i in classes) {
-    if(classes[i]._id === classId) {
-      classes[i].description = klass.description;
-      classes[i].startTime   = klass.startTime;
-      classes[i].endTime     = klass.endTime;
-      return classes[i];
-    }
+  function getAllClassesForUser(userId) {
+    return Klass.find({userId: userId}).exec();
   }
-}
 
-_API.addClassForUser = function(userId, klass) {
-  klass._id = uuid.v4();
-  klass.userId = userId;
+  function cancelClassById(classId) {
+    return Klass.findByIdAndRemove(classId).exec();
+  }
 
-  classes.push(klass);
-  return _API.getAllClassesForUser(userId);
-}
+  function updateClassById(classId, klass) {
+    return Klass.findByIdAndUpdate(classId, klass, {new: true}).exec();
+  }
 
-module.exports = _API;
+  function addClassForUser(userId, klass) {
+    klass.userId = userId;
+
+    return Klass.create(klass);
+  }
+
+  return _API;
+};

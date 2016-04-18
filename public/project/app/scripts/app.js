@@ -154,6 +154,22 @@ angular
           }
         }
     })
+      .state('register',{
+        templateUrl:'views/pages/register.html',
+        controller: 'RegisterCtrl',
+        url:'/register',
+        resolve: {
+          loadCtrl:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+              name:'TutorConnect',
+              files:[
+              'scripts/controllers/register.controller.js',
+              'scripts/services/user.service.js'
+              ]
+            });
+          }
+        }
+    })
       .state('dashboard.chart',{
         templateUrl:'views/chart.html',
         url:'/chart',
