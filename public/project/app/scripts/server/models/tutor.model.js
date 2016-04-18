@@ -6,13 +6,18 @@ module.exports = function() {
 
   var _API = {
     getAllTutors: getAllTutors,
+    getTutorFromUserId: getTutorFromUserId,
     getSubjectsForTutor: getSubjectsForTutor,
     updateTutorById: updateTutorById,
     createTutorWithUser: createTutorWithUser
   };
 
   function getAllTutors() {
-    return Tutor.find().exec();
+    return Tutor.find().populate('userId', 'firstName').exec();
+  }
+
+  function getTutorFromUserId(userId) {
+    return Tutor.findOne({userId: userId}).exec();
   }
 
   function getSubjectsForTutor(tutorId) {

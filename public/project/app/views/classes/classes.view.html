@@ -55,7 +55,7 @@
             <div class="col-md-6">
               <label>Tutor:</label>
               <br>
-              <select ng-model="model.newKlass.tutor" ng-options="tutor as tutor.name for tutor in model.tutors track by tutor._id"></select>
+              <select ng-model="model.newKlass.tutor" ng-options="tutor as tutor.userId.firstName for tutor in model.tutors track by tutor._id"></select>
             </div>
             <div class="col-md-6">
               <label>Date:</label>

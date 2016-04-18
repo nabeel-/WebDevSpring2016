@@ -2,7 +2,8 @@ module.exports = function(app, tutorModel) {
 
   app.get('/api/project/tutor/:tutorId', getSubjectsForTutor);
   app.get('/api/project/tutor', getAllTutors);
-  app.post('/api/project/tutor/user/:userId/', createTutorWithUser);
+  app.get('/api/project/tutor/user/:userId', getTutorFromUserId);
+  app.post('/api/project/tutor/user/:userId', createTutorWithUser);
   app.put('/api/project/tutor/:tutorId', updateTutorById);
 
   function getSubjectsForTutor(req, res) {
@@ -20,6 +21,16 @@ module.exports = function(app, tutorModel) {
 
     resp.then(function(tutors) {
       res.send(tutors);
+    }, function(err) {
+      res.status(400).send(err);
+    });
+  }
+
+  function getTutorFromUserId(req, res) {
+    var resp = tutorModel.getTutorFromUserId(req.params.userId);
+
+    resp.then(function(tutor) {
+      res.send(tutor);
     }, function(err) {
       res.status(400).send(err);
     });

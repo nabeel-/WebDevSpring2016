@@ -1,9 +1,9 @@
 'use strict';
 /**
  * @ngdoc function
- * @name TutorConnect.controller:ProfileCtrl
+ * @name TutorConnect.controller:HeaderCtrl
  * @description
- * # ProfileCtrl
+ * # HeaderCtrl
  * Controller of the TutorConnect
  */
 angular.module('TutorConnect')

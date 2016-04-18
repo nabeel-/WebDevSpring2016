@@ -97,6 +97,7 @@ angular
               name:'TutorConnect',
               files:[
               'scripts/controllers/main.js',
+              'scripts/services/tutor.service.js',
               'scripts/directives/dashboard/stats/stats.js'
               ]
             });

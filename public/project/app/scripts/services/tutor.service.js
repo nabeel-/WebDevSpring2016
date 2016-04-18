@@ -9,6 +9,10 @@
       return $http.get(API_BASE);
     }
 
+    function getTutorFromUserId(userId) {
+      return $http.get(API_BASE + 'user/' + userId);
+    }
+
     function getSubjectsForTutor(tutorId) {
       return $http.get(API_BASE + tutorId);
     }
@@ -23,6 +27,7 @@
 
     var service = {
       getAllTutors: getAllTutors,
+      getTutorFromUserId: getTutorFromUserId,
       getSubjectsForTutor : getSubjectsForTutor,
       createTutorWithUser: createTutorWithUser,
       updateTutorById: updateTutorById
