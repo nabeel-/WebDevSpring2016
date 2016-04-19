@@ -88,6 +88,17 @@ angular.module('TutorConnect')
       });
     };
 
+    vm.editReport = function(classId) {
+      var klass = _.findWhere(vm.my.classes, {_id: classId});
+
+      $rootScope.modal = $uibModal.open({
+        templateUrl: 'views/report/report-edit.view.html',
+        controller: 'ReportModalCtrl',
+        controllerAs: 'model',
+        resolve: { klass: function() { return klass; }}
+      });
+    };
+
     vm.parseDate = function(string) {
       var date = string.split(' ')[0];
 

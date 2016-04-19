@@ -8,7 +8,7 @@ var mongoose = require("mongoose");
      _class: {type: mongoose.Schema.Types.Object, ref: 'Class_p'},
      createdAt: String,
      comments: String,
-     score: Number
+     rating: Number
    }, {collection: 'report_p'});
    return ReportSchema;
  };

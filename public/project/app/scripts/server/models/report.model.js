@@ -22,7 +22,7 @@ module.exports = function() {
   }
 
   function getReportForClass(classId) {
-    return Report.find({_class: classId}).exec();
+    return Report.findOne({_class: classId}).exec();
   }
 
   function addReportForStudent(submId, studId, report) {
