@@ -28,7 +28,7 @@ angular
     var checkLoggedin = function($q, $timeout, $http, $state, $rootScope) {
       var deferred = $q.defer();
   
-      $http.get('http://localhost:3000/api/project/loggedin').success(function(user) {
+      $http.get('/api/project/loggedin').success(function(user) {
         if (user !== '0') {
           $rootScope.currentUser = user;
           deferred.resolve();
@@ -36,7 +36,6 @@ angular
 
         else {
           deferred.reject();
-          console.log('need to login');
           $state.go('login');
         }
       });
@@ -48,7 +47,7 @@ angular
     {
         var deferred = $q.defer();
     
-        $http.get('http://localhost:3000/api/project/loggedin').success(function(user)
+        $http.get('/api/project/loggedin').success(function(user)
         {
             $rootScope.errorMessage = null;
             // User is Authenticated
