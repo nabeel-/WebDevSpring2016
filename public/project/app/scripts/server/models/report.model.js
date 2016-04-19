@@ -14,11 +14,11 @@ module.exports = function() {
   };
 
   function getAllReportsForStudent(userId) {
-    return Report.find({_student: userId}).populate('_student').exec();
+    return Report.find({_student: userId}).populate('_submitter', 'firstName').exec();
   }
 
   function getAllReportsForTutor(userId) {
-    return Report.find({_submitter: userId}).populate('_submitter').exec();
+    return Report.find({_submitter: userId}).populate('_student', 'firstName').exec();
   }
 
   function getReportForClass(classId) {

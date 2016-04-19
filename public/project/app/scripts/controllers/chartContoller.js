@@ -1,69 +1,44 @@
 'use strict';
 /**
  * @ngdoc function
- * @name TutorConnect.controller:MainCtrl
+ * @name TutorConnect.controller:ChartCtrl
  * @description
- * # MainCtrl
+ * # ChartCtrl
  * Controller of the TutorConnect
  */
-angular.module('TutorConnect')
-  .controller('ChartCtrl', ['$scope', function ($scope) {
-    $scope.line = {
-	    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-	    series: ['Series A', 'Series B'],
-	    data: [
-	      [65, 59, 80, 81, 56, 55, 40],
-	      [28, 48, 40, 19, 86, 27, 90]
-	    ],
-	    onClick: function (points, evt) {
-	      console.log(points, evt);
-	    }
-    };
+ angular.module('TutorConnect')
+ .controller('ChartCtrl', function ($rootScope, ReportService, _) {
 
-    $scope.bar = {
-	    labels: ['2006', '2007', '2008', '2009', '2010', '2011', '2012'],
-		series: ['Series A', 'Series B'],
+  var vm = this;
 
-		data: [
-		   [65, 59, 80, 81, 56, 55, 40],
-		   [28, 48, 40, 19, 86, 27, 90]
-		]
-    	
-    };
+  vm.my = $rootScope.currentUser;
 
-    $scope.donut = {
-    	labels: ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'],
-    	data: [300, 500, 100]
-    };
+  vm.isTutor = vm.my.roles[0] === 'tutor';
 
-    $scope.radar = {
-    	labels:['Eating', 'Drinking', 'Sleeping', 'Designing', 'Coding', 'Cycling', 'Running'],
+  vm.my.reports = [];
+  vm.line = {};
 
-    	data:[
-    	    [65, 59, 90, 81, 56, 55, 40],
-    	    [28, 48, 40, 19, 96, 27, 100]
-    	]
-    };
+  function handleResponse(resp) {
+    if(resp.status === 200) {
+      vm.my.reports = resp.data;
+      vm.labels = _.pluck(vm.my.reports, 'createdAt');
+      vm.data   = _.pluck(vm.my.reports, 'rating');
 
-    $scope.pie = {
-    	labels : ['Download Sales', 'In-Store Sales', 'Mail-Order Sales'],
-    	data : [300, 500, 100]
-    };
+      vm.line = {
+       labels: vm.labels,
+       series: [vm.my.firstName],
+       data: [vm.data],
+       onClick: function (points, evt) {
+         console.log(points, evt);
+       }
+     };
+   }
+  }
+  
+  if(vm.isTutor) {
+    ReportService.getAllReportsForTutor(vm.my._id).then(handleResponse);
+  } else {
+    ReportService.getAllReportsForStudent(vm.my._id).then(handleResponse);
+  }
 
-    $scope.polar = {
-    	labels : ['Download Sales', 'In-Store Sales', 'Mail-Order Sales', 'Tele Sales', 'Corporate Sales'],
-    	data : [300, 500, 100, 40, 120]
-    };
-
-    $scope.dynamic = {
-    	labels : ['Download Sales', 'In-Store Sales', 'Mail-Order Sales', 'Tele Sales', 'Corporate Sales'],
-    	data : [300, 500, 100, 40, 120],
-    	type : 'PolarArea',
-
-    	toggle : function () 
-    	{
-    		this.type = this.type === 'PolarArea' ?
-    	    'Pie' : 'PolarArea';
-		}
-    };
-}]);
+});
