@@ -13,7 +13,7 @@ module.exports = function() {
   };
 
   function getClassesForTutor(tutorId) {
-    return Klass.find({tutorId: tutorId}).exec();
+    return Klass.find({tutorId: tutorId}).populate('userId').exec();
   }
 
   function getAllClassesForUser(userId) {

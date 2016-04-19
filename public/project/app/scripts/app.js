@@ -98,6 +98,7 @@ angular
               files:[
               'scripts/controllers/main.js',
               'scripts/services/tutor.service.js',
+              'scripts/services/report.service.js',
               'scripts/services/classes.service.js',
               'scripts/directives/dashboard/stats/stats.js'
               ]
@@ -133,8 +134,10 @@ angular
               files:[
                 'scripts/controllers/classes.controller.js',
                 'scripts/controllers/class-edit.controller.js',
+                'scripts/controllers/report-modal.controller.js',
                 'scripts/services/classes.service.js',
-                'scripts/services/tutor.service.js'
+                'scripts/services/tutor.service.js',
+                'scripts/services/report.service.js'
               ]
             });
           }
