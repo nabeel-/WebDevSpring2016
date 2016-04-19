@@ -5,9 +5,12 @@
 
     var API_BASE = '/api/project/user/';
 
-    function findUserByCredentials(username, password) {
-      return $http.get(API_BASE + '?username=' + username + '&password=' + password);
+    function login(user) {
+      return $http.post('/api/project/login', user);
     }
+    function logout() {
+       return $http.post('/api/project/logout');
+     }
 
     function findAllUsers() {
       return $http.get(API_BASE);
@@ -27,10 +30,11 @@
 
     var service = {
       findAllUsers : findAllUsers,
-      findUserByCredentials : findUserByCredentials,
       createUser : createUser,
       deleteUserById : deleteUserById,
-      updateUser : updateUser
+      updateUser : updateUser,
+      login: login,
+      logout: logout
     };
 
     return service;

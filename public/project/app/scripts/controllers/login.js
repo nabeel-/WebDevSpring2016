@@ -7,15 +7,21 @@
  * Controller of the TutorConnect
  */
 angular.module('TutorConnect')
-  .controller('LoginCtrl', function($rootScope, $scope, $state, UserService) {
+  .controller('LoginCtrl', function($rootScope, $state, UserService) {
+
+    var vm = this;
+
     
-    $scope.login = function() {
-      UserService.findUserByCredentials($scope.username, $scope.password).then(function(resp) {
-        if(resp.status === 200) {
-          $rootScope.currentUser = resp.data;
-          $state.go('dashboard.home');
-        }
-      });
+    vm.login = function(user) {
+
+      if(user) {
+        UserService.login(user).then(function(resp) {
+          if(resp.status === 200) {
+            $rootScope.currentUser = resp.data;
+            $state.go('dashboard.home');
+          }
+        });
+      }
     };
 
   });

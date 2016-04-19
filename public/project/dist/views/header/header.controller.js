@@ -1,16 +1,18 @@
 'use strict';
 /**
  * @ngdoc function
- * @name TutorConnect.controller:ProfileCtrl
+ * @name TutorConnect.controller:HeaderCtrl
  * @description
- * # ProfileCtrl
+ * # HeaderCtrl
  * Controller of the TutorConnect
  */
 angular.module('TutorConnect')
-  .controller('HeaderCtrl', function($scope, $rootScope, $state) {
+  .controller('HeaderCtrl', function($scope, $rootScope, $state, UserService) {
     $scope.logout = function() {
-      $rootScope.currentUser = null;
-      $state.go('landing');
+      UserService.logout().then(function(resp) {
+        $rootScope.currentUser = null;
+        $state.go('landing');
+      });
     }
 
   });
