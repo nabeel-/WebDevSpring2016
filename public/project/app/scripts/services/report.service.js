@@ -3,7 +3,7 @@
 
   angular.module('TutorConnect').factory('ReportService', function($http) {
 
-    var API_BASE = 'http://localhost:3000/api/project/report/';
+    var API_BASE = '/api/project/report/';
 
     function getAllReportsForStudent(userId) {
       return $http.get(API_BASE + 'student/'+ userId);

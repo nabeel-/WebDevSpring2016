@@ -3,7 +3,7 @@
 
   angular.module('TutorConnect').factory('ClassesService', function($http) {
 
-    var API_BASE = 'http://localhost:3000/api/project/user/';
+    var API_BASE = '/api/project/user/';
 
     function getAllClassesForUser(userId) {
       return $http.get(API_BASE + userId + '/classes');

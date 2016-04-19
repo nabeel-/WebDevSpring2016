@@ -3,7 +3,7 @@
 
   angular.module('TutorConnect').factory('TutorService', function($http) {
 
-    var API_BASE = 'http://localhost:3000/api/project/tutor/';
+    var API_BASE = '/api/project/tutor/';
 
     function getAllTutors() {
       return $http.get(API_BASE);
