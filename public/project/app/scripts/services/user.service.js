@@ -3,6 +3,15 @@
 
   angular.module('TutorConnect').factory('UserService', function($http) {
 
+    var service = {
+      findAllUsers : findAllUsers,
+      createUser : createUser,
+      deleteUserById : deleteUserById,
+      updateUser : updateUser,
+      login: login,
+      logout: logout
+    };
+
     var API_BASE = '/api/project/user/';
 
     function login(user) {
@@ -27,15 +36,6 @@
     function updateUser(userId, user) {
       return $http.put(API_BASE + userId, user);
     }
-
-    var service = {
-      findAllUsers : findAllUsers,
-      createUser : createUser,
-      deleteUserById : deleteUserById,
-      updateUser : updateUser,
-      login: login,
-      logout: logout
-    };
 
     return service;
   });

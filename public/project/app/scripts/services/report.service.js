@@ -3,6 +3,15 @@
 
   angular.module('TutorConnect').factory('ReportService', function($http) {
 
+    var service = {
+      getAllReportsForStudent : getAllReportsForStudent,
+      getAllReportsForTutor: getAllReportsForTutor,
+      updateReportById: updateReportById,
+      deleteReportById: deleteReportById,
+      addReportForStudent: addReportForStudent,
+      getReportForClass: getReportForClass
+    };
+
     var API_BASE = '/api/project/report/';
 
     function getAllReportsForStudent(userId) {
@@ -28,15 +37,6 @@
     function addReportForStudent(submId, studId, report) {
       return $http.post(API_BASE + 'tutor/' + submId + '/student/' + studId, report);
     }
-
-    var service = {
-      getAllReportsForStudent : getAllReportsForStudent,
-      getAllReportsForTutor: getAllReportsForTutor,
-      updateReportById: updateReportById,
-      deleteReportById: deleteReportById,
-      addReportForStudent: addReportForStudent,
-      getReportForClass: getReportForClass
-    };
 
     return service;
   });

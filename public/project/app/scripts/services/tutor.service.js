@@ -3,6 +3,14 @@
 
   angular.module('TutorConnect').factory('TutorService', function($http) {
 
+    var service = {
+      getAllTutors: getAllTutors,
+      getTutorFromUserId: getTutorFromUserId,
+      getSubjectsForTutor : getSubjectsForTutor,
+      createTutorWithUser: createTutorWithUser,
+      updateTutorById: updateTutorById
+    };
+
     var API_BASE = '/api/project/tutor/';
 
     function getAllTutors() {
@@ -24,14 +32,6 @@
     function updateTutorById(tutorId, tutor) {
       return $http.put(API_BASE + tutorId, tutor);
     }
-
-    var service = {
-      getAllTutors: getAllTutors,
-      getTutorFromUserId: getTutorFromUserId,
-      getSubjectsForTutor : getSubjectsForTutor,
-      createTutorWithUser: createTutorWithUser,
-      updateTutorById: updateTutorById
-    };
 
     return service;
   });

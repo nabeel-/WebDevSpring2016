@@ -3,6 +3,14 @@
 
   angular.module('TutorConnect').factory('ClassesService', function($http) {
 
+    var service = {
+      getAllClassesForUser : getAllClassesForUser,
+      updateClassById: updateClassById,
+      cancelClassById: cancelClassById,
+      addClassForUser: addClassForUser,
+      getClassesForTutor: getClassesForTutor
+    };
+
     var API_BASE = '/api/project/user/';
 
     function getAllClassesForUser(userId) {
@@ -24,14 +32,6 @@
     function getClassesForTutor(userId, tutorId) {
       return $http.get(API_BASE + userId + '/classes/tutor/' + tutorId);
     }
-
-    var service = {
-      getAllClassesForUser : getAllClassesForUser,
-      updateClassById: updateClassById,
-      cancelClassById: cancelClassById,
-      addClassForUser: addClassForUser,
-      getClassesForTutor: getClassesForTutor
-    };
 
     return service;
   });
