@@ -1,1 +1,0 @@
-"use strict";angular.module("TutorConnect").directive("stats",function(){return{templateUrl:"scripts/directives/dashboard/stats/stats.html",restrict:"E",scope:{model:"=",comments:"@",text:"@",name:"@",colour:"@",details:"@",type:"@","goto":"@",lgsize:"@",mdsize:"@"}}});

@@ -3,7 +3,7 @@
         <ul class="nav in" id="side-menu">
             <div class="card">
                 <img id="profile-img" class="profile-img-card" src="//ssl.gstatic.com/accounts/ui/avatar_2x.png" />
-                <p id="profile-name" class="profile-name-card">{{currentUser.firstName}} {{currentUser.lastName}}</p>
+                <p id="profile-name" class="profile-name-card">{{model.currentUser.firstName}} {{model.currentUser.lastName}}</p>
             </div>
 
             <li class="sidebar-search">
@@ -26,7 +26,7 @@
             </li>
 
             <li ui-sref-active="active">
-                <a ui-sref="dashboard.chart"><i class="fa fa-bar-chart-o fa-fw"></i> Progress<span></span></a>
+                <a ui-sref="dashboard.chart"><i class="fa fa-bar-chart-o fa-fw"></i> Reports<span></span></a>
             </li>
             
         </ul>

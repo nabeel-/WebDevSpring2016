@@ -8,13 +8,17 @@
  */
 angular.module('TutorConnect')
   .controller('ProfileCtrl', function($rootScope, $state, UserService) {
-
     var vm = this;
 
-    vm.my = $rootScope.currentUser;
+    vm.update = update;
 
-    vm.update = function() {
+    init();
 
+    function init() {
+      vm.my = $rootScope.currentUser;
+    }
+
+    function update() {
       // Generate new user object with updated attributes
       var updatedUser = {
         username:  vm.my.username,

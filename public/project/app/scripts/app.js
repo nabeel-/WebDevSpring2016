@@ -214,6 +214,7 @@ angular
       .state('register',{
         templateUrl:'views/pages/register.html',
         controller: 'RegisterCtrl',
+        controllerAs: 'model',
         url:'/register',
         resolve: {
           loadCtrl:function($ocLazyLoad) {

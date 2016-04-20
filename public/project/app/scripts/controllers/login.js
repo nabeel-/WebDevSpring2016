@@ -10,10 +10,9 @@ angular.module('TutorConnect')
   .controller('LoginCtrl', function($rootScope, $state, UserService) {
 
     var vm = this;
+    vm.login = login;
 
-    
-    vm.login = function(user) {
-
+    function login(user) {
       if(user) {
         UserService.login(user).then(function(resp) {
           if(resp.status === 200) {

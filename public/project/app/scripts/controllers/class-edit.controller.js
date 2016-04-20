@@ -11,51 +11,56 @@ angular.module('TutorConnect')
 
     var vm = this;
 
-    vm.klass = klass;
+    vm.save    = save;
+    vm.changed = changed;
 
-    vm.my = $rootScope.currentUser;
-    vm.description = klass.description;
-    vm.dateObj =  moment({ year: moment(klass.startTime).year(),
-                        month: moment(klass.startTime).month(),
-                        day: moment(klass.startTime).date()
-                    }).format('YYYY-MM-DD');
+    init();
 
-    vm.minDate = moment().format('YYYY-MM-DD');
+    function init() {
+      vm.my = $rootScope.currentUser;
 
-    vm.startTime = moment(klass.startTime);
-    vm.endTime   = moment(klass.endTime);
+      vm.klass       = klass;
+      vm.description = klass.description;
 
-    var minStart  = moment(klass.startTime);
-    minStart.hour(15);
-    minStart.minute(30);
-    vm.minStart = minStart;
+      vm.dateObj =  moment({ year: moment(klass.startTime).year(),
+                             month: moment(klass.startTime).month(),
+                             day: moment(klass.startTime).date()
+                          }).format('YYYY-MM-DD');
 
-    var maxStart = moment(klass.startTime);
-    maxStart.hour(18);
-    maxStart.minute(30);
-    vm.maxStart = maxStart;
+      var minStart = moment(klass.startTime);
+      var maxStart = moment(klass.startTime);
+      var maxEnd   = moment(klass.endTime);
 
-    vm.minEnd = vm.startTime.add(30, 'm');
+      minStart.hour(15);
+      minStart.minute(30);
+      maxStart.hour(18);
+      maxStart.minute(30);
+      maxEnd.hour(19);
+      maxEnd.minute(30);
 
-    var maxEnd = moment(klass.endTime);
-    maxEnd.hour(19);
-    maxEnd.minute(30);
-    vm.maxEnd = maxEnd;
+      vm.startTime = moment(klass.startTime);
+      vm.endTime   = moment(klass.endTime);
+      vm.maxStart  = maxStart;
+      vm.minStart  = minStart;
+      vm.minEnd    = vm.startTime.add(30, 'm');
+      vm.maxEnd    = maxEnd;
+      vm.minDate   = moment().format('YYYY-MM-DD');
+      
 
+      vm.options = {
+        hopts: [4,5,6],
+        mopts: [0,30]
+      };
+    }
 
-    vm.options = {
-      hopts: [4,5,6],
-      mopts: [0,30]
-    };
-
-    vm.changed = function() {
+    function changed() {
       if (moment(vm.endTime).isBefore(moment(vm.startTime))) {
         vm.endTime = vm.minEnd = moment(vm.startTime).add(30, 'm');
       }
       vm.minEnd = moment(vm.startTime).add(30, 'm');
     };
 
-    vm.save = function() {
+    function save() {
       var sTime = moment.isMoment(vm.startTime) ? vm.startTime._i.toString().split(' ')[1] : vm.startTime.toString().split(' ')[4];
       var eTime = moment.isMoment(vm.endTime) ? vm.endTime._i.toString().split(' ')[1] : vm.endTime.toString().split(' ')[4];
       var date  = vm.date ? moment(vm.date.toString()).format('YYYY-MM-DD') : vm.dateObj;
@@ -70,7 +75,6 @@ angular.module('TutorConnect')
           $rootScope.modal.close();
         }
       });
-
     };
 
   });

@@ -8,23 +8,28 @@
  */
 angular.module('TutorConnect')
   .controller('ReportModalCtrl', function($uibModalInstance, $rootScope, $state, ReportService, moment, klass) {
-
     var vm = this;
 
-    vm.klass = klass;
-    vm.report = {};
+    vm.add    = add;
+    vm.update = update;
 
-    ReportService.getReportForClass(klass._id).then(function(resp) {
-      if(resp.status === 200 && resp.data) {
-        vm.report = resp.data;
-        vm.rating = vm.report.rating;
-        vm.comments = vm.report.comments;
-      }
-    });
+    init();
 
-    vm.my = $rootScope.currentUser;
+    function init() {
+      vm.my     = $rootScope.currentUser;
+      vm.klass  = klass;
+      vm.report = {};
 
-    vm.add = function() {
+      ReportService.getReportForClass(klass._id).then(function(resp) {
+        if(resp.status === 200 && resp.data) {
+          vm.report = resp.data;
+          vm.rating = vm.report.rating;
+          vm.comments = vm.report.comments;
+        }
+      });
+    }
+
+    function add() {
       var report = {
         rating: vm.rating,
         comments: vm.comments,
@@ -37,10 +42,9 @@ angular.module('TutorConnect')
           $rootScope.modal.close();
         }
       });
-
     };
 
-    vm.update = function() {
+    function update() {
       vm.report.rating = vm.rating;
       vm.report.comments = vm.comments;
 
@@ -49,7 +53,6 @@ angular.module('TutorConnect')
           $rootScope.modal.close();
         }
       });
-
     };
 
   });

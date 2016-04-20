@@ -8,25 +8,17 @@
  */
 angular.module('TutorConnect')
   .controller('RegisterCtrl', function($rootScope, $scope, $state, UserService) {
+    var vm = this;
+
+    vm.register = register;
     
-    $scope.register = function() {
-
-      var user = {
-        username:  $scope.username,
-        password:  $scope.password,
-        email:     $scope.email,
-        firstName: $scope.first,
-        lastName:  $scope.last,
-        roles:     [$scope.role]
-      };
-
+    function register(user) {
       UserService.createUser(user).then(function(resp) {
         if(resp.status === 200) {
           $rootScope.currentUser = resp.data;
           $state.go('dashboard.home');
         }
       });
-
     };
 
   });

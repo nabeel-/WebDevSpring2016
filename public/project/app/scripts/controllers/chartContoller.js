@@ -8,16 +8,24 @@
  */
  angular.module('TutorConnect')
  .controller('ChartCtrl', function ($rootScope, ReportService, _) {
-
   var vm = this;
+  
+  init();
 
-  vm.my = $rootScope.currentUser;
+  function init() {
+    vm.my = $rootScope.currentUser;
+    vm.my.reports = [];
+    vm.isTutor = vm.my.roles[0] === 'tutor';
+    vm.line = {};
 
-  vm.isTutor = vm.my.roles[0] === 'tutor';
+    if(vm.isTutor) {
+      ReportService.getAllReportsForTutor(vm.my._id).then(handleResponse);
+    } else {
+      ReportService.getAllReportsForStudent(vm.my._id).then(handleResponse);
+    }
+  }
 
-  vm.my.reports = [];
-  vm.line = {};
-
+  // Helper function to abstract over response from report service
   function handleResponse(resp) {
     if(resp.status === 200) {
       vm.my.reports = resp.data;
@@ -33,12 +41,6 @@
        }
      };
    }
-  }
-  
-  if(vm.isTutor) {
-    ReportService.getAllReportsForTutor(vm.my._id).then(handleResponse);
-  } else {
-    ReportService.getAllReportsForStudent(vm.my._id).then(handleResponse);
   }
 
 });

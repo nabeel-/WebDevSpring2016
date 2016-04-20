@@ -9,43 +9,47 @@
 angular.module('TutorConnect')
   .controller('MainCtrl', function($rootScope, $state, TutorService, ClassesService) {
     var vm = this;
-    
-    vm.classNames = ['Math', 'Science', 'History', 'English', 'Spanish', 'French'];
-    vm.myClassNames = [];
 
-    vm.nextBlock = {};
+    vm.toggle      = toggle;
+    vm.createTutor = createTutor;
 
-    vm.my = $rootScope.currentUser;
+    init();
 
-    vm.isTutor = vm.my.roles[0] === 'tutor';
-    vm.my.tutor = vm.my.classes = null;
+    function init() {
+      vm.my           = $rootScope.currentUser;
+      vm.isTutor      = vm.my.roles[0] === 'tutor';
+      vm.my.tutor     = vm.my.classes = null;
+      vm.nextBlock    = {};
+      vm.classNames   = ['Math', 'Science', 'History', 'English', 'Spanish', 'French'];
+      vm.myClassNames = [];
 
-    if(vm.isTutor) {
-      TutorService.getTutorFromUserId(vm.my._id).then(function(resp) {
-        if(resp.status === 200 && resp.data) {
-          vm.my.tutor = resp.data;
-          TutorService.getSubjectsForTutor(vm.my.tutor._id).then(function(resp) {
-            if(resp.status === 200 && resp.data) {
-              vm.my.subjects = resp.data.subjects;
-            }
-          });
+      if(vm.isTutor) {
+        TutorService.getTutorFromUserId(vm.my._id).then(function(resp) {
+          if(resp.status === 200 && resp.data) {
+            vm.my.tutor = resp.data;
+            TutorService.getSubjectsForTutor(vm.my.tutor._id).then(function(resp) {
+              if(resp.status === 200 && resp.data) {
+                vm.my.subjects = resp.data.subjects;
+              }
+            });
 
-          ClassesService.getClassesForTutor(vm.my._id, vm.my.tutor._id).then(function(resp) {
-            if(resp.status === 200 && resp.data) {
-              vm.nextBlock.date = resp.data[0].startTime.split(' ')[0];
-            }
-          });
-        }
-      });
-    } else {
-      ClassesService.getAllClassesForUser(vm.my._id).then(function(resp) {
-        if(resp.status === 200 && resp.data) {
-          vm.nextBlock.date = resp.data[0].startTime.split(' ')[0];
-        }
-      });
+            ClassesService.getClassesForTutor(vm.my._id, vm.my.tutor._id).then(function(resp) {
+              if(resp.status === 200 && resp.data) {
+                vm.nextBlock.date = resp.data[0].startTime.split(' ')[0];
+              }
+            });
+          }
+        });
+      } else {
+        ClassesService.getAllClassesForUser(vm.my._id).then(function(resp) {
+          if(resp.status === 200 && resp.data) {
+            vm.nextBlock.date = resp.data[0].startTime.split(' ')[0];
+          }
+        });
+      }
     }
 
-    vm.toggle = function(className) {
+    function toggle(className) {
       var idx = vm.myClassNames.indexOf(className);
 
       if (idx > -1) { 
@@ -55,8 +59,7 @@ angular.module('TutorConnect')
       }
     };
 
-    vm.createTutor = function() {
-
+    function createTutor() {
       var tutor = {
         subjects: vm.myClassNames
       };

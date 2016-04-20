@@ -1,1 +1,0 @@
-"use strict";angular.module("TutorConnect").controller("LoginCtrl",function($rootScope,$state,UserService){var vm=this;vm.login=function(user){user&&UserService.login(user).then(function(resp){200===resp.status&&($rootScope.currentUser=resp.data,$state.go("dashboard.home"))})}});
