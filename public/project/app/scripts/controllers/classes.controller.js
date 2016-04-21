@@ -151,6 +151,12 @@ angular.module('TutorConnect')
     };
 
     function addBlock() {
+      if(!(vm.newKlass.startTime instanceof Date)) {
+        vm.newKlass.startTime = new Date(vm.newKlass.startTime);
+      }
+      if(!(vm.newKlass.endTime instanceof Date)) {
+        vm.newKlass.endTime = new Date(vm.newKlass.endTime);
+      }
       vm.newKlass.startTime.setFullYear(vm.date.getFullYear(), vm.date.getMonth(), vm.date.getDate());
       vm.newKlass.endTime.setFullYear(vm.date.getFullYear(), vm.date.getMonth(), vm.date.getDate());
 
