@@ -6,11 +6,11 @@
                 <p id="profile-name" class="profile-name-card">{{model.currentUser.firstName}} {{model.currentUser.lastName}}</p>
             </div>
 
-            <li class="sidebar-search">
+            <li ng-hide="model.isSearch()" class="sidebar-search">
               <div class="input-group custom-search-form">
-                  <input type="text" class="form-control" placeholder="Search...">
+                  <input type="text" class="form-control" ng-model="model.query" placeholder="Search...">
                   <span class="input-group-btn">
-                      <button class="btn btn-default" type="button">
+                      <button class="btn btn-default" type="button" ng-click="model.search(model.query)">
                           <i class="fa fa-search"></i>
                       </button>
                   </span>

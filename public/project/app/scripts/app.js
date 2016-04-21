@@ -73,6 +73,7 @@ angular
                 name: 'TutorConnect',
                 files:[
                   'views/header/header.controller.js',
+                  'scripts/services/search.service.js',
                   'scripts/services/user.service.js'
                   ]
               });
@@ -122,6 +123,8 @@ angular
                   name:'TutorConnect',
                   files:[
                     'views/header/header.controller.js',
+                    'scripts/services/search.service.js',
+                    'scripts/controllers/search.controller.js',
                     'scripts/services/user.service.js'
                     ]
                 });
@@ -228,6 +231,25 @@ angular
           }
         }
     })
+      .state('dashboard.search',{
+        templateUrl:'views/search/search.view.html',
+        controller: 'SearchCtrl',
+        controllerAs: 'model',
+        url:'/search?query',
+        resolve: {
+          loggedin: checkLoggedin,
+          loadCtrl:function($ocLazyLoad) {
+            return $ocLazyLoad.load({
+              name:'TutorConnect',
+              files:[
+              'scripts/controllers/search.controller.js',
+              'scripts/controllers/search-detail.controller.js',
+              'scripts/services/search.service.js'
+              ]
+            });
+          }
+        }
+    })
       .state('dashboard.chart',{
         templateUrl:'views/chart.html',
         url:'/chart',
@@ -246,6 +268,7 @@ angular
                 name:'TutorConnect',
                 files:[
                   'views/header/header.controller.js',
+                  'scripts/services/search.service.js',
                   'scripts/services/user.service.js',
                   'scripts/services/report.service.js',
                   'scripts/controllers/chartContoller.js'

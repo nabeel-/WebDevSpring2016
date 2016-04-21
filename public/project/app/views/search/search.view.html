@@ -1,0 +1,47 @@
+<div>
+  <div class="row">
+    <div class="col-lg-12">
+      <h1 class="page-header">Search Results<br><small>Browse through the Udemy library of courses for more ways to learn!</small></h1>
+      <small>
+    </div>
+    <!-- /.col-lg-12 -->
+  </div>
+  <!-- /.row -->
+
+  <!-- /.panel -->
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="input-group custom-search-form">
+          <input type="text" class="form-control" ng-model="model.query" placeholder="Search...">
+          <span class="input-group-btn">
+              <button class="btn btn-default" type="button" ng-click="model.search(model.query)">
+                  <i class="fa fa-search"></i>
+              </button>
+          </span>
+      </div>
+      <div class="panel panel-default"> 
+        <div class="panel-heading"> Showing results for {{model.query}}</div>
+        <div class="panel-body">
+          <ul class="list-group row">
+            <li class="col-md-6 list-group-item result" ng-click="model.showDetail(course)" ng-repeat="course in model.results.results">
+              <table class="table">
+                <tr>
+                  <td class="col-md-9"> 
+                    <h4>{{course.title}}</h4>
+                    <p>by {{course.visible_instructors[0].display_name}}</p>
+                    <p>{{course.price}}</p>
+                  </td>
+                  <td class="col-md-3">
+                    <img style="float:right;" ng-src="{{course.image_240x135}}" alt="{{course.title}}" />
+                  </td>
+                </tr>
+              </table>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!-- /.col-lg-4 -->
+  </div>
+  <!-- /.row -->
+</div>

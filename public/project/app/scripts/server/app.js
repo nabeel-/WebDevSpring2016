@@ -1,6 +1,6 @@
 'use strict';
 
-module.exports = function(app, uuid, db, mongoose) {
+module.exports = function(app, db, mongoose) {
   var userModel    = require('./models/user.model.js')(db, mongoose),
       classesModel = require('./models/classes.model.js')(db, mongoose),
       tutorModel   = require('./models/tutor.model.js')(db, mongoose),
@@ -9,4 +9,5 @@ module.exports = function(app, uuid, db, mongoose) {
   require('./services/classes.service.js')(app, classesModel);
   require('./services/tutor.service.js')(app, tutorModel);
   require('./services/report.service.js')(app, reportModel);
+  require('./services/search.service.js')(app);
 };

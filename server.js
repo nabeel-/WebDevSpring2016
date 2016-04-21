@@ -1,6 +1,5 @@
 var bodyParser = require('body-parser'),
 express    = require('express'),
-uuid       = require('node-uuid'),
 mongoose   = require('mongoose'),
 app        = express();
 var passport      = require('passport');
@@ -31,7 +30,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
-require('./public/assignment/server/app.js')(app, uuid, db, mongoose);
-require('./public/project/app/scripts/server/app.js')(app, uuid, db, mongoose);
+require('./public/assignment/server/app.js')(app, db, mongoose);
+require('./public/project/app/scripts/server/app.js')(app, db, mongoose);
 
 app.listen(port, ipaddress);

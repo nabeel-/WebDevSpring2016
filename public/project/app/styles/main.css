@@ -30,6 +30,11 @@ body {
   border-top: 1px solid #e5e5e5;
 }
 
+.result:hover, .result:focus {
+  opacity: .5;
+  cursor: pointer;
+}
+
 /* Customize container */
 @media (min-width: 768px) {
   .container {
