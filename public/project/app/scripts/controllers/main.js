@@ -7,7 +7,7 @@
  * Controller of the TutorConnect
  */
 angular.module('TutorConnect')
-  .controller('MainCtrl', function($rootScope, $state, TutorService, ClassesService) {
+  .controller('MainCtrl', function($rootScope, $state, TutorService, ClassesService, ReportService) {
     var vm = this;
 
     vm.toggle      = toggle;
@@ -22,6 +22,7 @@ angular.module('TutorConnect')
       vm.nextBlock    = {};
       vm.classNames   = ['Math', 'Science', 'History', 'English', 'Spanish', 'French'];
       vm.myClassNames = [];
+      vm.newReports   = "All caught up!";
 
       if(vm.isTutor) {
         TutorService.getTutorFromUserId(vm.my._id).then(function(resp) {
@@ -36,6 +37,16 @@ angular.module('TutorConnect')
             ClassesService.getClassesForTutor(vm.my._id, vm.my.tutor._id).then(function(resp) {
               if(resp.status === 200 && resp.data) {
                 vm.nextBlock.date = resp.data[0].startTime.split(' ')[0];
+                var num_classes = resp.data.length;
+
+                ReportService.getAllReportsForTutor(vm.my._id).then(function(resp) {
+                  if(resp.status === 200 && resp.data) {
+                    var num_reports = resp.data.length;
+                    if(num_reports < num_classes) {
+                      vm.newReports = num_classes - num_reports;
+                    }
+                  }
+                })
               }
             });
           }
@@ -44,6 +55,7 @@ angular.module('TutorConnect')
         ClassesService.getAllClassesForUser(vm.my._id).then(function(resp) {
           if(resp.status === 200 && resp.data) {
             vm.nextBlock.date = resp.data[0].startTime.split(' ')[0];
+            vm.nextBlock.tutor = resp.data[0].tutorId.userId;
           }
         });
       }
