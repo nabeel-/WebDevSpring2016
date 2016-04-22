@@ -3,15 +3,21 @@
 
   angular.module("FormBuilderApp").controller("HeaderController", HeaderController);
 
-  function HeaderController($scope, $location, $rootScope) {
+  function HeaderController($location, $rootScope, UserService) {
 
-    // UserService should handle the logout process
-    $scope.logout = function() {
-      $rootScope.currentUser = null;
-      $rootScope.loggedIn    = false;
-      $rootScope.isAdmin     = false;
-      $location.url('/home');
-    };
+    var vm = this;
+
+    vm.logout = logout;
+
+    function logout() {
+      UserService.logout().then(function(resp){
+        if(resp.status === 200) {
+          $rootScope.currentUser = null;
+          $location.url('/home');
+        }
+      })
+    }
+
   };
   
 })();

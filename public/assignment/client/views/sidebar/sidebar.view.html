@@ -3,13 +3,13 @@
         <li ng-class="{active: pathAt('home') }">
           <a href="#/home">Home</a>
         </li>
-        <li ng-class="{active: pathAt('profile') }" ng-show="loggedIn">
+        <li ng-class="{active: pathAt('profile') }" ng-show="$root.currentUser">
           <a href="#/profile">Profile</a>
         </li>
-        <li ng-class="{active: pathAt('admin') }" ng-show="loggedIn && isAdmin">
+        <li ng-class="{active: pathAt('admin') }" ng-show="$root.currentUser && ($root.currentUser.roles.indexOf('admin') != -1)">
           <a href="#/admin">Admin</a>
         </li>
-        <li ng-class="{active: pathAt('forms') }" ng-show="loggedIn">
+        <li ng-class="{active: pathAt('forms') }" ng-show="$root.currentUser">
           <a href="#/forms">Forms</a>
         </li>
     </ul>

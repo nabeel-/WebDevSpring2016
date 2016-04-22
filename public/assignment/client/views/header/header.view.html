@@ -1,4 +1,4 @@
-<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="HeaderController as ctrl">
+<nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="HeaderController as model">
     <div class="container-fluid">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -11,10 +11,10 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li ng-class="{ active: pathAt('register') }" ng-show="!loggedIn" ><a ng-click="currentPath = 'register'" href="#/register">Register</a></li>
-                <li ng-class="{ active: pathAt('login') }"    ng-show="!loggedIn"><a  ng-click="currentPath = 'login'" href="#/login">Login</a></li>
-                <li ng-class="{ active: pathAt('profile') }"  ng-show="loggedIn"><a   ng-click="currentPath = 'profile'"href="#/profile">{{currentUser.username}}</a></li>
-                <li ng-show="loggedIn"><a ng-click="logout()" href="#/">Logout</a></li>
+                <li ng-class="{ active: pathAt('register') }" ng-hide="$root.currentUser" ><a ng-click="currentPath = 'register'" href="#/register">Register</a></li>
+                <li ng-class="{ active: pathAt('login') }"    ng-hide="$root.currentUser"><a  ng-click="currentPath = 'login'" href="#/login">Login</a></li>
+                <li ng-class="{ active: pathAt('profile') }"  ng-show="$root.currentUser"><a   ng-click="currentPath = 'profile'"href="#/profile">Hi, {{$root.currentUser.username}}</a></li>
+                <li ng-show="$root.currentUser"><a ng-click="model.logout()" href="#/">Logout</a></li>
             </ul>
             <!--<form class="navbar-form navbar-right">-->
             <!--<input type="text" class="form-control" placeholder="Search...">-->
