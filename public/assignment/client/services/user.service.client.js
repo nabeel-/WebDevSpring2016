@@ -30,13 +30,30 @@
       return $http.put(API_BASE + userId, user);
     }
 
+    // Admin API calls
+
+    function addUserByAdmin(user) {
+      return $http.post('/api/assignment/admin/user', user);
+    }
+
+    function updateUserByAdmin(user) {
+      return $http.put('/api/assignment/admin/user/' + user._id, user);
+    }
+
+    function removeUserByAdmin(id) {
+      return $http.delete('/api/assignment/admin/user/' + id);
+    }
+
     var service = {
       findAllUsers : findAllUsers,
       createUser : createUser,
       deleteUserById : deleteUserById,
       updateUser : updateUser,
       login: login,
-      logout: logout
+      logout: logout,
+      addUserByAdmin: addUserByAdmin,
+      updateUserByAdmin: updateUserByAdmin,
+      removeUserByAdmin: removeUserByAdmin
     };
 
     return service;

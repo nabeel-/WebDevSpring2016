@@ -3,16 +3,24 @@ module.exports = function(app, userModel) {
   var passport      = require('passport');
   var LocalStrategy = require('passport-local').Strategy;
   var auth = authorized;
+  passport.use('assignment', new LocalStrategy(localStrategy));
+  passport.serializeUser(serializeUser);
+  passport.deserializeUser(deserializeUser);
+
   app.post  ('/api/assignment/login', passport.authenticate('assignment'), login);
   app.post  ('/api/assignment/logout',         logout);
   app.post  ('/api/assignment/register',       register);
   app.post  ('/api/assignment/user',     auth, register);
   app.get   ('/api/assignment/loggedin',       loggedin);
+  app.get   ('/api/assignment/user/:id',       findUserById);
   app.get   ('/api/assignment/user',     auth, findAllUsers);
   app.put   ('/api/assignment/user/:id', auth, updateUserById);
   app.delete('/api/assignment/user/:id', auth, deleteUserById);
 
-  app.get("/api/assignment/user/:id", findUserById);
+  // Admin API calls
+  app.post  ('/api/assignment/admin/user',     auth, createByAdmin);
+  app.put   ('/api/assignment/admin/user/:id', auth, updateByAdmin);
+  app.delete('/api/assignment/admin/user/:id', auth, removeByAdmin);
 
   function authorized (req, res, next) {
     if (!req.isAuthenticated()) {
@@ -22,7 +30,7 @@ module.exports = function(app, userModel) {
     }
   };
 
-  passport.use('assignment', new LocalStrategy(localStrategy));
+  
   function localStrategy(username, password, done) {
     userModel
     .findUserByCredentials({username: username, password: password})
@@ -36,9 +44,6 @@ module.exports = function(app, userModel) {
       }
       );
   }
-
-  passport.serializeUser(serializeUser);
-  passport.deserializeUser(deserializeUser);
 
   function serializeUser(user, done) {
     done(null, user);
@@ -84,7 +89,7 @@ module.exports = function(app, userModel) {
   };
 
   function deleteUserById(req, res){
-    var users = userModel.deleteUserById(req.params.id);
+    var resp = userModel.deleteUserById(req.params.id);
 
     resp.then(function(user) {
       res.send(user);
@@ -134,5 +139,33 @@ module.exports = function(app, userModel) {
       res.status(400).send(err);
     });
   };
+
+  function createByAdmin(req, res) {
+    if(isAdmin(req.user)) {
+      register(req, res);
+    } else {
+      res.status(403);
+    }
+  }
+
+  function updateByAdmin(req, res) {
+    if(isAdmin(req.user)) {
+      updateUserById(req, res);
+    } else {
+      res.status(403);
+    }
+  }
+
+  function removeByAdmin(req, res) {
+    if(isAdmin(req.user)) {
+      deleteUserById(req, res);
+    } else {
+      res.status(403);
+    }
+  }
+
+  function isAdmin(user) {
+    return user.roles.indexOf('admin') != -1;
+  }
 
 };
