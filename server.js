@@ -22,7 +22,7 @@ app.use(express.static(__dirname + '/public'));
 app.use(bodyParser.json());
 app.use(cookieParser());
 app.use(session({
-    secret: 'blahblah',
+    secret: process.env.SESSION_SECRET,
     resave: true,
     saveUninitialized: true
 }));

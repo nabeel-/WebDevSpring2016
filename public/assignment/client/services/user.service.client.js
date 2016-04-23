@@ -5,6 +5,18 @@
 
   function UserService($rootScope, $http) {
 
+    var service = {
+      findUsersByAdmin : findUsersByAdmin,
+      createUser : createUser,
+      deleteUserById : deleteUserById,
+      updateUser : updateUser,
+      login: login,
+      logout: logout,
+      addUserByAdmin: addUserByAdmin,
+      updateUserByAdmin: updateUserByAdmin,
+      removeUserByAdmin: removeUserByAdmin
+    };
+
     var API_BASE = "/api/assignment/user/";
 
     function login(user) {
@@ -43,18 +55,6 @@
     function removeUserByAdmin(id) {
       return $http.delete('/api/assignment/admin/user/' + id);
     }
-
-    var service = {
-      findUsersByAdmin : findUsersByAdmin,
-      createUser : createUser,
-      deleteUserById : deleteUserById,
-      updateUser : updateUser,
-      login: login,
-      logout: logout,
-      addUserByAdmin: addUserByAdmin,
-      updateUserByAdmin: updateUserByAdmin,
-      removeUserByAdmin: removeUserByAdmin
-    };
 
     return service;
   }
