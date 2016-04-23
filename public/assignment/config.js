@@ -24,7 +24,8 @@
     })
     .when('/admin', {
       controller: 'AdminController',
-      templateUrl: 'client/views/users/admin.view.html',
+      controllerAs: 'model',
+      templateUrl: 'client/views/admin/admin.view.html',
       resolve: { loggedin: checkAdmin }
     })
     .when('/forms', {
