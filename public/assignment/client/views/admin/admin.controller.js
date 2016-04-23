@@ -18,7 +18,7 @@
       vm.my = $rootScope.currentUser;
       vm.by = { col: 'username', descending: false };
 
-      UserService.findAllUsers().then(function(resp) {
+      UserService.findUsersByAdmin().then(function(resp) {
         if(resp.status === 200) {
           vm.users = resp.data;
         }
@@ -49,7 +49,7 @@
     }
 
     function update(user) {
-      user.roles = user.roles.split(",");
+      user.roles = user.roles instanceof Array ? user.roles : user.roles.split(",");
       UserService.updateUserByAdmin(user).then(function(resp) {
         if(resp.status === 200 && resp.data) {
           var ind = _.findIndex(vm.users, function(u) {return u._id == user._id});

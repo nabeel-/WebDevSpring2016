@@ -3,6 +3,7 @@ module.exports = function(app, userModel) {
   var passport      = require('passport');
   var LocalStrategy = require('passport-local').Strategy;
   var auth = authorized;
+  var auth_ad = authorized_admin;
   passport.use('assignment', new LocalStrategy(localStrategy));
   passport.serializeUser(serializeUser);
   passport.deserializeUser(deserializeUser);
@@ -13,14 +14,15 @@ module.exports = function(app, userModel) {
   app.post  ('/api/assignment/user',     auth, register);
   app.get   ('/api/assignment/loggedin',       loggedin);
   app.get   ('/api/assignment/user/:id',       findUserById);
-  app.get   ('/api/assignment/user',     auth, findAllUsers);
   app.put   ('/api/assignment/user/:id', auth, updateUserById);
   app.delete('/api/assignment/user/:id', auth, deleteUserById);
 
   // Admin API calls
-  app.post  ('/api/assignment/admin/user',     auth, createByAdmin);
-  app.put   ('/api/assignment/admin/user/:id', auth, updateByAdmin);
-  app.delete('/api/assignment/admin/user/:id', auth, removeByAdmin);
+  app.get   ('/api/assignment/admin/user',     auth_ad, findAllUsers);
+  app.get   ('/api/assignment/admin/user/:id', auth_ad, findUserById); 
+  app.post  ('/api/assignment/admin/user',     auth_ad, register);
+  app.put   ('/api/assignment/admin/user/:id', auth_ad, updateUserById);
+  app.delete('/api/assignment/admin/user/:id', auth_ad, deleteUserById);
 
   function authorized (req, res, next) {
     if (!req.isAuthenticated()) {
@@ -29,6 +31,14 @@ module.exports = function(app, userModel) {
       next();
     }
   };
+
+  function authorized_admin(req, res, next) {
+    if(req.isAuthenticated && isAdmin(req.user)) {
+      next();
+    } else {
+      res.send(403);
+    }
+  }
 
   
   function localStrategy(username, password, done) {
@@ -78,94 +88,72 @@ module.exports = function(app, userModel) {
 
 //////////////
 
-  function register(req, res) {
-    var resp = userModel.createUser(req.body);
+function register(req, res) {
+  var resp = userModel.createUser(req.body);
 
-    resp.then(function(user) {
-      res.send(user);
-    }, function(err) {
-      res.status(400).send(err);
-    }); 
-  };
+  resp.then(function(user) {
+    res.send(user);
+  }, function(err) {
+    res.status(400).send(err);
+  }); 
+};
 
-  function deleteUserById(req, res){
-    var resp = userModel.deleteUserById(req.params.id);
+function deleteUserById(req, res){
+  var resp = userModel.deleteUserById(req.params.id);
 
-    resp.then(function(user) {
-      res.send(user);
-    }, function(err) {
-      res.status(400).send(err);
-    });
-  };
+  resp.then(function(user) {
+    res.send(user);
+  }, function(err) {
+    res.status(400).send(err);
+  });
+};
 
-  function findAllUsers(req, res) {
-    var resp = userModel.getAllUsers();
+function findAllUsers(req, res) {
+  var resp = userModel.getAllUsers();
 
-    resp.then(function(users) {
-      res.send(users);
-    }, function(err) {
-      res.status(400).send(err);
-    });
-  }
+  resp.then(function(users) {
+    res.send(users);
+  }, function(err) {
+    res.status(400).send(err);
+  });
+
+}
 
 
-  function findUserByUsername(req, res) {
-    var username = req.query.username,
-    resp     = userModel.findUserByUsername(username);
+function findUserByUsername(req, res) {
+  var username = req.query.username,
+  resp     = userModel.findUserByUsername(username);
 
-    resp.then(function(user) {
-      res.send(user);
-    }, function(err) {
-      res.status(400).send(err);
-    });
-  }
+  resp.then(function(user) {
+    res.send(user);
+  }, function(err) {
+    res.status(400).send(err);
+  });
+}
 
-  function findUserById(req, res){
-    var resp = userModel.findUserById(req.params.id);
+function findUserById(req, res){
+  var resp = userModel.findUserById(req.params.id);
 
-    resp.then(function(user) {
-      res.send(user);
-    }, function(err) {
-      res.status(400).send(err);
-    });
-  };
+  resp.then(function(user) {
+    res.send(user);
+  }, function(err) {
+    res.status(400).send(err);
+  });
+};
 
-  function updateUserById(req, res){
-    var resp = userModel.updateUserById(req.params.id, req.body);
+function updateUserById(req, res){
+  var resp = userModel.updateUserById(req.params.id, req.body);
 
-    resp.then(function(user) {
-      res.send(user);
-    }, function(err) {
-      res.status(400).send(err);
-    });
-  };
+  resp.then(function(user) {
+    res.send(user);
+  }, function(err) {
+    res.status(400).send(err);
+  });
+};
 
-  function createByAdmin(req, res) {
-    if(isAdmin(req.user)) {
-      register(req, res);
-    } else {
-      res.status(403);
-    }
-  }
 
-  function updateByAdmin(req, res) {
-    if(isAdmin(req.user)) {
-      updateUserById(req, res);
-    } else {
-      res.status(403);
-    }
-  }
-
-  function removeByAdmin(req, res) {
-    if(isAdmin(req.user)) {
-      deleteUserById(req, res);
-    } else {
-      res.status(403);
-    }
-  }
-
-  function isAdmin(user) {
-    return user.roles.indexOf('admin') != -1;
-  }
+function isAdmin(user) {
+  return user.roles.indexOf('admin') != -1;
+}
 
 };

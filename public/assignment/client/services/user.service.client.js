@@ -14,10 +14,6 @@
        return $http.post('/api/assignment/logout');
      }
 
-    function findAllUsers() {
-      return $http.get(API_BASE);
-    }
-
     function createUser(user) {
       return $http.post(API_BASE, user);
     }
@@ -32,6 +28,10 @@
 
     // Admin API calls
 
+    function findUsersByAdmin() {
+      return $http.get('/api/assignment/admin/user');
+    }
+
     function addUserByAdmin(user) {
       return $http.post('/api/assignment/admin/user', user);
     }
@@ -45,7 +45,7 @@
     }
 
     var service = {
-      findAllUsers : findAllUsers,
+      findUsersByAdmin : findUsersByAdmin,
       createUser : createUser,
       deleteUserById : deleteUserById,
       updateUser : updateUser,
