@@ -3,31 +3,22 @@
 
   angular.module("FormBuilderApp").controller("ProfileController", ProfileController);
 
-  function ProfileController($scope, $rootScope, $location, UserService) {
+  function ProfileController($rootScope, $location, UserService) {
 
-    var currentUser = $rootScope.currentUser;
+    var vm = this;
 
-    $scope.username  = currentUser.username;
-    $scope.password  = currentUser.password;
-    $scope.firstName = currentUser.firstName;
-    $scope.lastName  = currentUser.lastName;
-    $scope.emails    = currentUser.emails;
-    $scope.phones    = currentUser.phones;
+    vm.update = update;
 
-    $scope.update = function() {
+    init();
 
-      // Generate new user object with updated attributes
-      var updatedUser = {
-        username:  $scope.username,
-        password:  $scope.password,
-        firstName: $scope.firstName,
-        lastName:  $scope.lastName,
-        emails:    $scope.emails,
-        phones:    $scope.phones
-      };
-      
-      UserService.updateUser(currentUser._id, updatedUser).then(function(resp) {
-        if (resp.data) { 
+    function init() {
+      vm.my = $rootScope.currentUser;
+      vm.user = vm.my;
+    }
+
+    function update(user) {
+      UserService.updateUser(vm.my._id, user).then(function(resp) {
+        if (resp.status === 200) { 
           $rootScope.currentUser = resp.data;
           $location.url("/profile"); 
         }

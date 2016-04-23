@@ -19,10 +19,7 @@
 
       UserService.createUser(user).then(function(resp) {
         if(resp.status == 200) {
-          $rootScope.currentUser = resp.data;
-          $rootScope.loggedIn    = true;
-          $rootScope.isAdmin     = _.contains(resp.data.roles, 'admin');
-          
+          $rootScope.currentUser = resp.data;          
           $location.url("/profile");
         }
       });

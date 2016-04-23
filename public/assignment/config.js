@@ -20,6 +20,7 @@
     .when('/profile', {
       controller: 'ProfileController',
       templateUrl: 'client/views/users/profile.view.html',
+      controllerAs: 'model',
       resolve: { loggedin: checkLoggedin }
     })
     .when('/admin', {

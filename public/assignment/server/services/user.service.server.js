@@ -10,8 +10,7 @@ module.exports = function(app, userModel) {
 
   app.post  ('/api/assignment/login', passport.authenticate('assignment'), login);
   app.post  ('/api/assignment/logout',         logout);
-  app.post  ('/api/assignment/register',       register);
-  app.post  ('/api/assignment/user',     auth, register);
+  app.post  ('/api/assignment/user',           register);
   app.get   ('/api/assignment/loggedin',       loggedin);
   app.get   ('/api/assignment/user/:id',       findUserById);
   app.put   ('/api/assignment/user/:id', auth, updateUserById);
@@ -92,7 +91,13 @@ function register(req, res) {
   var resp = userModel.createUser(req.body);
 
   resp.then(function(user) {
-    res.send(user);
+    req.login(user, function(err) {
+      if (err) {
+        res.status(400).send(err);
+      } else {
+        res.json(user);
+      }
+    });
   }, function(err) {
     res.status(400).send(err);
   }); 
